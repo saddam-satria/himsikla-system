@@ -12,4 +12,6 @@ class gallery extends Model
     protected $fillable = array(
         "image"
     );
+    public $incrementing = true;
+    public $keyType = 'int';
 }

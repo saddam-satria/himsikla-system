@@ -13,4 +13,6 @@ class role extends Model
         "id",
         'roleName'
     );
+    public $incrementing = true;
+    public $keyType = 'int';
 }
