@@ -45,7 +45,7 @@
             <div class="container">
                 <div class="row">
                     <div class="col-12 col-sm-6 mt-3">
-                        <img src="{{asset("assets/img/lagom-people-discussing-the-idea-of-a-new-project-in-the-office.png")}}" width="380" style="object-fit: cover; height: 100%;" alt="Bubble Gum" />
+                        <img src="{{asset("assets/img/lagom-people-discussing-the-idea-of-a-new-project-in-the-office.png")}}" width="320" style="object-fit: cover; height: 100%;" alt="Bubble Gum" />
                     </div>
                     <div class="col-12 col-sm-6 mt-3">
                         <div class="d-flex flex-column justify-content-center" style="height: 100%;">
@@ -175,7 +175,7 @@
         <div class="container my-3">
             <div class="row">
                 <div class="col-12 col-sm-6 mt-3">
-                    <img src="{{asset("assets/img/lagom-the-programmer-developes-code-at-his-laptop.png")}}" width="380" style="object-fit: cover; height: 100%;" alt="Bubble Gum" />
+                    <img src="{{asset("assets/img/lagom-the-programmer-developes-code-at-his-laptop.png")}}" width="320" style="object-fit: cover; height: 100%;" alt="Bubble Gum" />
                 </div>
                 <div class="col-12 col-sm-6 mt-3">
                     <div class="d-flex flex-column justify-content-center" style="height: 100%;">
