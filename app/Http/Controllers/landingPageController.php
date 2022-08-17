@@ -58,7 +58,7 @@ class landingPageController extends Controller
     public function event($id)
     {
         $title = "Acara " . $id;
-        $event = Event::query()->where("id", "=", $id)->first(array("eventName", "id", "startAt", "description", "price", "isOnline", "detailLocation", "feedback", "location", "payment", "createdAt", "contactPerson", "status", "endAt"));
+        $event = Event::query()->where("id", "=", $id)->first(array("banner", "eventName", "id", "startAt", "description", "price", "isOnline", "detailLocation", "feedback", "location", "payment", "createdAt", "contactPerson", "status", "endAt"));
         if (is_null($event)) return abort(404);
 
         $contactPerson = $event->contactPerson;
