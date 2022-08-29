@@ -27,7 +27,7 @@ class CreateMembersTable extends Migration
             $table->string("token", 8)->unique()->nullable();
             $table->string("location")->nullable();
             $table->string("periode", 10);
-            $table->foreignUuid("user_id")->unique()->nullable()->references("id")->on("user")->nullOnDelete()->cascadeOnUpdate();
+            $table->foreignUuid("user_id")->unique()->nullable()->references("id")->on("user")->cascadeOnDelete()->cascadeOnUpdate();
             $table->timestamp("createdAt")->useCurrent();
             $table->timestamp("updatedAt")->nullable()->useCurrentOnUpdate();
         });
