@@ -132,7 +132,7 @@ class landingPageController extends Controller
     }
     public function register($id, Request $request)
     {
-
+        $event = Event::query()->where("id", "=", $id)->first(array("price"));
         $rules = array(
             'nim' => ["max:10", "required"],
             "university" => ["max:150", "required"],
@@ -150,7 +150,7 @@ class landingPageController extends Controller
             "email" => $request->post("email"),
             "nim" => $request->post("nim"),
             "university" => $request->post("university"),
-            "isPaidOff" => false
+            "isPaidOff" => $event->price == 0 || is_null($event->price)
         );
         $absence = EventAbsence::query()->where("email", "=", $data["email"])->where("event_id", "=", $id)->first(array("id"));
 

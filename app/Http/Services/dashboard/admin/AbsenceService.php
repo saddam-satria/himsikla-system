@@ -232,4 +232,8 @@ class AbsenceService extends Service
             "event" => $response->select("event_id as id")->first()
         );
     }
+    public function detailAbsenceEvent(string $id, array $columns = ["*"])
+    {
+        return $this->eventAbsenceRepository->query()->where("event_absence.id", "=", $id)->join("event", "event.id", "=", "event_absence.event_id")->first($columns);
+    }
 }

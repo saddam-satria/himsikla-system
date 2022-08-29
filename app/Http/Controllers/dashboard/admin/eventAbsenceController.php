@@ -77,7 +77,7 @@ class eventAbsenceController extends Controller
     public function show($id)
     {
         $title = "Detail Absen Acara";
-        $event = $this->absenceService->detailEventAbsence(array("event_absence.id AS absence_id", "event_absence.createdAt", "event_absence.status", "event_absence.email", "event_absence.nim", "event_absence.university",  "event.id", "event.location", "event_absence.isPaidOff"));
+        $event = $this->absenceService->detailAbsenceEvent($id, array("event_absence.id AS absence_id", "event_absence.createdAt", "event_absence.status", "event_absence.email", "event_absence.nim", "event_absence.university",  "event.id", "event.location", "event_absence.isPaidOff"));
 
         if (is_null($event)) return abort(404);
 
