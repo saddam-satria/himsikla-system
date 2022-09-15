@@ -115,7 +115,7 @@
                         <textarea
                           class="form-control"
                           rows="3"
-                          placeholder="Alamat"
+                          placeholder="Deskripsi"
                           cols="3"
                           style="resize: none;"
                           name="description"
