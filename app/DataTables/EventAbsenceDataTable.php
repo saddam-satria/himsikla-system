@@ -27,6 +27,8 @@ class EventAbsenceDataTable extends DataTable
                 <i class="fa-solid fa-clipboard-check mr-2"></i>Lunas
             </button>
         </form>';
+        })->editColumn("createdAt", function ($data) {
+            return $data->createdAt;
         })->rawColumns(array("action", "paid"));
     }
 
