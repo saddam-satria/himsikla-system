@@ -64,7 +64,7 @@ class EventAbsenceDataTable extends DataTable
             Column::make('nim')->title("NIM")->orderable(false),
             Column::make('university')->title("Perguruan Tinggi")->orderable(false)->searchable(false),
             Column::make('isPaidOff')->title("Status Pembayaran")->orderable(false)->searchable(false),
-            Column::make('createdAt')->title("Waktu Absensi")->orderable(false)->searchable(false),
+            Column::make('createdAt')->title("Waktu Pendaftaran")->orderable(false)->searchable(false),
         );
 
         if (auth()->user()->member->occupation != "ketua") {
