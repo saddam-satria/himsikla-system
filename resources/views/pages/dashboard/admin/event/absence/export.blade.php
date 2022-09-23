@@ -8,6 +8,7 @@
                 <th>NIM</th>
                 <th>University</th>
                 <th>Status</th>
+                <th>Waktu Pendaftaran</th>
                 <th>Waktu Absensi</th>
               
             </tr>
@@ -20,6 +21,7 @@
                     <td>{{$member->university}}</td>
                     <td>{{$member->status}}</td>
                     <td>{{$member->createdAt}}</td>
+                    <td>{{$member->updatedAt}}</td>
                 </tr>
             @endforeach
         </tbody>

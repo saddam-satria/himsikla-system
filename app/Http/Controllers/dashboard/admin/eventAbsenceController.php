@@ -141,7 +141,7 @@ class eventAbsenceController extends Controller
 
         if (is_null($event)) return abort(404);
         $title = " Data Absensi Acara " . $eventByID->eventName . " - " . $eventByID->id;
-        $members = EventAbsence::query()->where("event_id", "=", $event)->join("event", "event.id", "=", "event_absence.event_id")->get(array("event_absence.id", "event_absence.email", "event_absence.nim", "event_absence.university", "event_absence.createdAt", "event_absence.status"));
+        $members = EventAbsence::query()->where("event_id", "=", $event)->join("event", "event.id", "=", "event_absence.event_id")->get(array("event_absence.id", "event_absence.email", "event_absence.nim", "event_absence.university", "event_absence.createdAt", "event_absence.status", "event.updatedAt"));
 
         if (count($members) <= 0) return redirect()->route("dashboard.admin.meet_absence.index"  . "?event=" . $eventByID->id)->with("error", "Data Masih Kosong, Tidak Dapat Di export");
 
