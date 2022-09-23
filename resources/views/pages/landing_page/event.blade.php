@@ -12,7 +12,7 @@
             </div>
             <div class="card">
                 <div class="card-header">
-                    <span class="text-uppercase">Himsi Acara </span> {{$event->id}}
+                    <span class="text-uppercase">Himsi Acara {{$event->eventName}}</span> 
                 </div>
                <div class="card-body">
                     <div class="row">
