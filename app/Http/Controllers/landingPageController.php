@@ -73,9 +73,9 @@ class landingPageController extends Controller
     }
     private function getMembers($query)
     {
-        if (!is_null($query) && $query == "member")  return Member::all(array("name", "occupation"));
+        if (!is_null($query) && $query == "member")  return Member::all(array("name", "occupation", "image"));
 
-        return Member::where("periode", "=", date_format(date_create("now"), "Y") - 1 . "-" . date_format(date_create("now"), "Y"))->where('occupation', 'LIKE', '%' . "ketua" . '%')->orWhere("occupation", "=", "bendahara")->orWhere("occupation", "=", "sekretaris")->get(array("name", "occupation"));
+        return Member::where("periode", "=", date_format(date_create("now"), "Y") - 1 . "-" . date_format(date_create("now"), "Y"))->where('occupation', 'LIKE', '%' . "ketua" . '%')->orWhere("occupation", "=", "bendahara")->orWhere("occupation", "=", "sekretaris")->get(array("name", "occupation", "image"));
     }
     public function about(Request $request)
     {
@@ -83,7 +83,7 @@ class landingPageController extends Controller
         $divisions = array("rsdm", "kominfo", "pendidikan", "litbang");
         $galleries = gallery::query()->orderBy("createdAt", "DESC")->take(6)->get(array("image"));
         $query = $request->get("query");
-        $members = Member::all(array("name", "occupation"));
+        $members = Member::all(array("name", "occupation", "image"));
         return view("pages.landing_page.about", compact("title", "divisions", "galleries", "members"));
     }
     public function emailRegister($id, Request $request)
