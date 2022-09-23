@@ -54,7 +54,7 @@ class MemberDataTable extends DataTable
     {
         return [
             Column::make('name')->title("Nama Anggota")->orderable(false),
-            Column::make('email')->title("Email")->orderable(false),
+            Column::make('email')->title("Email")->orderable(false)->searchable(false),
             Column::make('nim')->title("NIM")->orderable(false),
             Column::make('phoneNumber')->title("No Handphone")->orderable(false),
             Column::make('occupation')->title("Jabatan")->searchable(false)->orderable(false),
