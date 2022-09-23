@@ -283,7 +283,7 @@
                 @foreach ($members as $member)
                 <div class="col-6 col-sm-6 col-lg-4 mb-3">
                     <div class="card rounded shadow" id="event-card" style="height: 100%;">
-                        <img style="object-fit: cover; height: 220px;" width="100%" src="{{is_null($member->image) ? "https://ui-avatars.com/api/?name=" . $member->name . "&size=280": asset("assets/banner" . "/" . $member->image)}}" class="img-fluid image-cover rounded" />
+                        <img style="object-fit: cover; height: 220px;" width="100%" src="{{is_null($member->image) ? "https://ui-avatars.com/api/?name=" . $member->name . "&size=280": asset("assets/member/profile" . "/" . $member->image)}}" class="img-fluid image-cover rounded" />
                         <div class="card-body">
                             <div class="d-flex flex-column justify-content-center">
                                 <span class="text-lg text-bold text-uppercase">
