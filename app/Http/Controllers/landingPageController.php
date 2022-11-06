@@ -7,7 +7,6 @@ use App\Models\Event;
 use App\Models\EventAbsence;
 use App\Models\gallery;
 use App\Models\Member;
-use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 
@@ -39,16 +38,16 @@ class landingPageController extends Controller
     }
     public function events(Request $request)
     {
-        $title = "Foto Foto HIMSI KALIABANG";
+        $title = "Acara HIMSI KALIABANG";
         $columns = array("id", "eventName", "banner", "startAt", "location", "isOnline", "price");
-        $events = Event::query()->get($columns);
+        $events = Event::query()->where("isGeneral", "=", true)->get($columns);
         $slides  = [];
         $query = $request->get("query");
         $eventsToday = DB::table("event")->whereRaw("DATE(startAt) = CURDATE()")->get(array("banner", "eventName", "id"));
 
 
         if (!is_null($query)) {
-            $events = Event::query()->where("eventName", "like", '%' . $query . '%')->get($columns);
+            $events = Event::query()->where("eventName", "like", '%' . $query . '%')->where("isGeneral", "=", true)->get($columns);
         }
 
 
