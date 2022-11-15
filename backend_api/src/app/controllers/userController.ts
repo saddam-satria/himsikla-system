@@ -20,14 +20,23 @@ class UserController {
     const { page, take } = query;
 
     try {
+      if (!page) {
+        throw new Error('Required Page');
+      }
+
+      const takeData = take ? parseInt(take as string) : 10;
+
       if (parseInt(page as string) < 1)
         throw new Error('page must be greter than 0');
       let users = (
-        await this.userRepository.findAll(parseInt(page as string))
+        await this.userRepository.findAll(
+          parseInt(page as string),
+          parseInt(takeData.toString())
+        )
       ).getData();
 
       const totalData = users.count as number;
-      const takeData = take ? parseInt(take as string) : 10;
+
       const totalPage = totalData / takeData;
 
       if (parseInt(page as string) > Math.round(totalPage)) {
