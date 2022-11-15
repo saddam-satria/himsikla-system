@@ -3,7 +3,7 @@
 use App\Http\Controllers\auth\forgotPasswordController;
 use App\Http\Controllers\auth\loginController;
 use App\Http\Controllers\auth\logoutController;
-use App\Http\Controllers\auth\redirectController;
+// use App\Http\Controllers\auth\redirectController;
 use App\Http\Controllers\dashboard\admin\alumniController;
 use App\Http\Controllers\dashboard\admin\balanceSheetController;
 use App\Http\Controllers\dashboard\admin\detailFinanceController;
@@ -148,4 +148,4 @@ Route::middleware(array("alreadyLogged"))->group(function () {
     Route::post("/login", [loginController::class, 'login'])->name("auth.login");
 });
 
-Route::get("/redirect", [redirectController::class, 'redirect'])->name("auth.redirect");
+// Route::get("/redirect", [redirectController::class, 'redirect'])->name("auth.redirect");
