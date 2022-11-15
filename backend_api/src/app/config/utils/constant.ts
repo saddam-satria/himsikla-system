@@ -20,3 +20,6 @@ export const BASE_PATH: string = path.resolve(
 
 // Configure Public Path (Static Files)
 export const BASE_ASSET: string = path.join(BASE_PATH, 'public');
+
+export const HIMSI_KLA_MEMBER_PROFILE =
+  'https://himsikaliabang.com/assets/member/profile/';

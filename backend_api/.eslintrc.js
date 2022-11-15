@@ -25,5 +25,6 @@ module.exports = {
     'no-unused-vars': 'warn',
     'comma-dangle': ['off', 'never'],
     'object-curly-spacing': ['warn', 'always'],
+    'node/no-unsupported-features/es-builtins': 'off',
   },
 };

@@ -1,0 +1,350 @@
+datasource db {
+  provider = "mysql"
+  url      = env("DATABASE_URL")
+}
+generator client {
+  provider = "prisma-client-js"
+}
+
+model alumni {
+  id         String    @id @default(dbgenerated("(uuid())")) @db.Char(36)
+  name       String    @db.VarChar(255)
+  image      String?   @db.VarChar(255)
+  periode    String    @db.VarChar(255)
+  occupation String    @db.VarChar(255)
+  createdAt  DateTime  @default(now()) @db.Timestamp(0)
+  updatedAt  DateTime? @db.Timestamp(0)
+}
+
+model balance_sheet {
+  id        String              @id @default(dbgenerated("(uuid())")) @db.Char(36)
+  month     balance_sheet_month
+  debit     Float?              @default(0)
+  kredit    Float?              @default(0)
+  note      String?             @db.LongText
+  createdAt DateTime            @default(now()) @db.Timestamp(0)
+  updatedAt DateTime?           @db.Timestamp(0)
+}
+
+model certificate {
+  id        String    @id @default(dbgenerated("(uuid())")) @db.Char(36)
+  link      String    @db.VarChar(255)
+  event_id  String?   @db.Char(36)
+  createdAt DateTime  @default(now()) @db.Timestamp(0)
+  updatedAt DateTime? @db.Timestamp(0)
+  event     event?    @relation(fields: [event_id], references: [id], map: "certificate_event_id_foreign")
+
+  @@index([event_id], map: "certificate_event_id_foreign")
+}
+
+model detail_finance {
+  id            String                       @id @default(dbgenerated("(uuid())")) @db.Char(36)
+  member_id     String?                      @db.Char(36)
+  finance_id    String?                      @db.Char(36)
+  receipt_id    String?                      @db.Char(36)
+  paymentMethod detail_finance_paymentMethod
+  cash          Float
+  status        Boolean                      @default(false)
+  createdAt     DateTime                     @default(now()) @db.Timestamp(0)
+  updatedAt     DateTime?                    @db.Timestamp(0)
+  finance       finance?                     @relation(fields: [finance_id], references: [id], map: "detail_finance_finance_id_foreign")
+  member        member?                      @relation(fields: [member_id], references: [id], map: "detail_finance_member_id_foreign")
+  receipt       receipt?                     @relation(fields: [receipt_id], references: [id], map: "detail_finance_receipt_id_foreign")
+
+  @@index([finance_id], map: "detail_finance_finance_id_foreign")
+  @@index([member_id], map: "detail_finance_member_id_foreign")
+  @@index([receipt_id], map: "detail_finance_receipt_id_foreign")
+}
+
+model document {
+  id           String    @id @default(dbgenerated("(uuid())")) @db.Char(36)
+  document     String    @db.VarChar(255)
+  documentName String    @db.VarChar(150)
+  createdAt    DateTime  @default(now()) @db.Timestamp(0)
+  updatedAt    DateTime? @db.Timestamp(0)
+}
+
+model event {
+  id             String          @id @default(dbgenerated("(uuid())")) @db.Char(36)
+  eventName      String          @db.VarChar(150)
+  startAt        DateTime        @db.DateTime(0)
+  endAt          DateTime        @db.DateTime(0)
+  description    String          @db.LongText
+  status         Boolean         @default(false)
+  banner         String?         @db.VarChar(150)
+  isGeneral      Boolean         @default(false)
+  member_id      String?         @db.Char(36)
+  isFree         Boolean         @default(false)
+  price          Float?
+  isOnline       Boolean         @default(false)
+  location       String          @db.VarChar(255)
+  feedback       String?         @db.VarChar(255)
+  payment        String?         @db.VarChar(255)
+  contactPerson  String?         @db.VarChar(255)
+  detailLocation String?         @db.LongText
+  createdAt      DateTime        @default(now()) @db.Timestamp(0)
+  updatedAt      DateTime?       @db.Timestamp(0)
+  member         member?         @relation(fields: [member_id], references: [id], map: "event_member_id_foreign")
+  certificate    certificate[]
+  event_absence  event_absence[]
+  event_note     event_note[]
+
+  @@index([member_id], map: "event_member_id_foreign")
+}
+
+model event_absence {
+  id         String               @id @default(dbgenerated("(uuid())")) @db.Char(36)
+  email      String?              @db.VarChar(150)
+  nim        String?              @db.VarChar(150)
+  university String?              @db.VarChar(150)
+  isPaidOff  Boolean?
+  event_id   String?              @db.Char(36)
+  status     event_absence_status @default(absen)
+  createdAt  DateTime             @default(now()) @db.Timestamp(0)
+  updatedAt  DateTime?            @db.Timestamp(0)
+  event      event?               @relation(fields: [event_id], references: [id], map: "event_absence_event_id_foreign")
+
+  @@index([event_id], map: "event_absence_event_id_foreign")
+}
+
+model event_note {
+  id        String    @id @default(dbgenerated("(uuid())")) @db.Char(36)
+  event_id  String?   @db.Char(36)
+  createdAt DateTime  @default(now()) @db.Timestamp(0)
+  updatedAt DateTime? @db.Timestamp(0)
+  event     event?    @relation(fields: [event_id], references: [id], map: "event_note_event_id_foreign")
+  note      note[]
+
+  @@index([event_id], map: "event_note_event_id_foreign")
+}
+
+model failed_jobs {
+  id         BigInt   @id @default(autoincrement()) @db.UnsignedBigInt
+  uuid       String   @unique(map: "failed_jobs_uuid_unique") @db.VarChar(255)
+  connection String   @db.Text
+  queue      String   @db.Text
+  payload    String   @db.LongText
+  exception  String   @db.LongText
+  failed_at  DateTime @default(now()) @db.Timestamp(0)
+}
+
+model finance {
+  id             String           @id @default(dbgenerated("(uuid())")) @db.Char(36)
+  month          String           @db.VarChar(50)
+  price          Float
+  penalty        Float?
+  description    String?          @db.LongText
+  payment        String           @db.VarChar(150)
+  createdAt      DateTime         @default(now()) @db.Timestamp(0)
+  updatedAt      DateTime?        @db.Timestamp(0)
+  detail_finance detail_finance[]
+}
+
+model gallery {
+  id        BigInt    @id @default(autoincrement()) @db.UnsignedBigInt
+  image     String    @db.VarChar(255)
+  createdAt DateTime  @default(now()) @db.Timestamp(0)
+  updatedAt DateTime? @db.Timestamp(0)
+}
+
+model income {
+  id          String    @id @default(dbgenerated("(uuid())")) @db.Char(36)
+  date        DateTime  @db.Date
+  total       Float
+  description String?   @db.LongText
+  createdAt   DateTime  @default(now()) @db.Timestamp(0)
+  updatedAt   DateTime? @db.Timestamp(0)
+}
+
+model meet {
+  id             String         @id @default(dbgenerated("(uuid())")) @db.Char(36)
+  meetName       String         @db.VarChar(150)
+  material       String         @db.VarChar(200)
+  startAt        DateTime       @db.DateTime(0)
+  endAt          DateTime       @db.DateTime(0)
+  location       String         @db.VarChar(255)
+  status         Boolean        @default(false)
+  isOnline       Boolean        @default(false)
+  description    String?        @db.LongText
+  banner         String?        @db.VarChar(255)
+  price          Float?
+  detailLocation String?        @db.LongText
+  member_id      String?        @db.Char(36)
+  createdAt      DateTime       @default(now()) @db.Timestamp(0)
+  updatedAt      DateTime?      @db.Timestamp(0)
+  member         member?        @relation(fields: [member_id], references: [id], map: "meet_member_id_foreign")
+  meet_absence   meet_absence[]
+  meet_note      meet_note[]
+
+  @@index([member_id], map: "meet_member_id_foreign")
+}
+
+model meet_absence {
+  id        String              @id @default(dbgenerated("(uuid())")) @db.Char(36)
+  meet_id   String?             @db.Char(36)
+  member_id String?             @db.Char(36)
+  status    meet_absence_status @default(absen)
+  createdAt DateTime            @default(now()) @db.Timestamp(0)
+  updatedAt DateTime?           @db.Timestamp(0)
+  meet      meet?               @relation(fields: [meet_id], references: [id], map: "meet_absence_meet_id_foreign")
+  member    member?             @relation(fields: [member_id], references: [id], map: "meet_absence_member_id_foreign")
+
+  @@index([meet_id], map: "meet_absence_meet_id_foreign")
+  @@index([member_id], map: "meet_absence_member_id_foreign")
+}
+
+model meet_note {
+  id        String    @id @default(dbgenerated("(uuid())")) @db.Char(36)
+  note      String    @db.LongText
+  meet_id   String?   @db.Char(36)
+  createdAt DateTime  @default(now()) @db.Timestamp(0)
+  updatedAt DateTime? @db.Timestamp(0)
+  meet      meet?     @relation(fields: [meet_id], references: [id], map: "meet_note_meet_id_foreign")
+
+  @@index([meet_id], map: "meet_note_meet_id_foreign")
+}
+
+model member {
+  id             String           @id @default(dbgenerated("(uuid())")) @db.Char(36)
+  name           String           @db.VarChar(200)
+  address        String           @db.LongText
+  nim            BigInt           @unique(map: "member_nim_unique")
+  status         Boolean          @default(true)
+  phoneNumber    String           @unique(map: "member_phonenumber_unique") @db.VarChar(15)
+  image          String?          @db.VarChar(255)
+  occupation     String           @db.VarChar(30)
+  token          String?          @unique(map: "member_token_unique") @db.VarChar(8)
+  location       String?          @db.VarChar(255)
+  periode        String           @db.VarChar(10)
+  user_id        String?          @unique(map: "member_user_id_unique") @db.Char(36)
+  createdAt      DateTime         @default(now()) @db.Timestamp(0)
+  updatedAt      DateTime?        @db.Timestamp(0)
+  user           user?            @relation(fields: [user_id], references: [id], onDelete: Cascade, map: "member_user_id_foreign")
+  detail_finance detail_finance[]
+  event          event[]
+  meet           meet[]
+  meet_absence   meet_absence[]
+}
+
+model migrations {
+  id        Int    @id @default(autoincrement()) @db.UnsignedInt
+  migration String @db.VarChar(255)
+  batch     Int
+}
+
+model note {
+  id            String      @id @default(dbgenerated("(uuid())")) @db.Char(36)
+  event_note_id String?     @db.Char(36)
+  note          String      @db.LongText
+  createdAt     DateTime    @default(now()) @db.Timestamp(0)
+  updatedAt     DateTime?   @db.Timestamp(0)
+  event_note    event_note? @relation(fields: [event_note_id], references: [id], map: "note_event_note_id_foreign")
+
+  @@index([event_note_id], map: "note_event_note_id_foreign")
+}
+
+model outcome {
+  id          String    @id @default(dbgenerated("(uuid())")) @db.Char(36)
+  date        DateTime  @db.Date
+  total       Float
+  description String?   @db.LongText
+  createdAt   DateTime  @default(now()) @db.Timestamp(0)
+  updatedAt   DateTime? @db.Timestamp(0)
+}
+
+/// The underlying table does not contain a valid unique identifier and can therefore currently not be handled by the Prisma Client.
+model password_resets {
+  email      String    @db.VarChar(255)
+  token      String    @db.VarChar(255)
+  created_at DateTime? @db.Timestamp(0)
+
+  @@index([email], map: "password_resets_email_index")
+  @@ignore
+}
+
+model personal_access_tokens {
+  id             BigInt    @id @default(autoincrement()) @db.UnsignedBigInt
+  tokenable_type String    @db.VarChar(255)
+  tokenable_id   BigInt    @db.UnsignedBigInt
+  name           String    @db.VarChar(255)
+  token          String    @unique(map: "personal_access_tokens_token_unique") @db.VarChar(64)
+  abilities      String?   @db.Text
+  last_used_at   DateTime? @db.Timestamp(0)
+  created_at     DateTime? @db.Timestamp(0)
+  updated_at     DateTime? @db.Timestamp(0)
+
+  @@index([tokenable_type, tokenable_id], map: "personal_access_tokens_tokenable_type_tokenable_id_index")
+}
+
+model receipt {
+  id             String           @id @default(dbgenerated("(uuid())")) @db.Char(36)
+  image          String           @db.VarChar(255)
+  createdAt      DateTime         @default(now()) @db.Timestamp(0)
+  updatedAt      DateTime?        @db.Timestamp(0)
+  detail_finance detail_finance[]
+}
+
+model role {
+  id        BigInt    @id @default(autoincrement()) @db.UnsignedBigInt
+  roleName  String    @db.VarChar(255)
+  createdAt DateTime  @default(now()) @db.Timestamp(0)
+  updatedAt DateTime? @db.Timestamp(0)
+  user      user[]
+}
+
+model user {
+  id         String      @id @default(dbgenerated("(uuid())")) @db.Char(36)
+  email      String      @unique(map: "user_email_unique") @db.VarChar(255)
+  password   String      @db.VarChar(255)
+  isGuest    Boolean     @default(false)
+  gender     user_gender
+  university String?     @db.VarChar(255)
+  role_id    BigInt      @db.UnsignedBigInt
+  createdAt  DateTime    @default(now()) @db.Timestamp(0)
+  updatedAt  DateTime?   @db.Timestamp(0)
+  role       role        @relation(fields: [role_id], references: [id], onDelete: NoAction, onUpdate: NoAction, map: "user_role_id_foreign")
+  member     member?
+
+  @@index([role_id], map: "user_role_id_foreign")
+}
+
+enum balance_sheet_month {
+  JANUARI
+  FEBUARI
+  MARET
+  APRIL
+  MEI
+  JUNI
+  JULI
+  AGUSTUS
+  SEPTEMBER
+  OKTOBER
+  NOVEMBER
+  DESEMBER
+}
+
+enum meet_absence_status {
+  sakit
+  ijin
+  absen
+  hadir
+}
+
+enum detail_finance_paymentMethod {
+  DANA
+  BANK
+  OVO
+  GOPAY
+}
+
+enum user_gender {
+  laki_laki @map("laki-laki")
+  perempuan
+}
+
+enum event_absence_status {
+  sakit
+  ijin
+  absen
+  hadir
+}
