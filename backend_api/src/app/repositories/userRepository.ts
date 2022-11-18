@@ -3,6 +3,29 @@ import prisma from '../config/prisma';
 class UserRepository {
   private userEntity = prisma.user;
   private result: any;
+  private columns = {
+    email: true,
+    gender: true,
+    university: true,
+    role: {
+      select: {
+        roleName: true,
+      },
+    },
+    member: {
+      select: {
+        image: true,
+        name: true,
+        token: true,
+        nim: true,
+        address: true,
+        periode: true,
+        occupation: true,
+        status: true,
+        phoneNumber: true,
+      },
+    },
+  };
   public async findAll(page = 1, take = 10) {
     const pagination = (page - 1) * take;
     this.result = {
@@ -14,29 +37,7 @@ class UserRepository {
             not: 99,
           },
         },
-        select: {
-          email: true,
-          gender: true,
-          university: true,
-          role: {
-            select: {
-              roleName: true,
-            },
-          },
-          member: {
-            select: {
-              image: true,
-              name: true,
-              token: true,
-              nim: true,
-              address: true,
-              periode: true,
-              occupation: true,
-              status: true,
-              phoneNumber: true,
-            },
-          },
-        },
+        select: this.columns,
       }),
       count: await this.userEntity.count(),
     };
@@ -44,6 +45,34 @@ class UserRepository {
   }
   public getData() {
     return this.result;
+  }
+  public getUserByPayload(payload: string) {
+    return this.userEntity.findFirstOrThrow({
+      select: this.columns,
+      where: {
+        OR: [
+          {
+            email: {
+              equals: payload,
+            },
+          },
+          {
+            member: {
+              token: {
+                equals: payload,
+              },
+            },
+          },
+          {
+            member: {
+              name: {
+                contains: payload,
+              },
+            },
+          },
+        ],
+      },
+    });
   }
 }
 

@@ -7,6 +7,7 @@ export type TResponse<T> = {
   request?: string;
   status: string;
   data: null | T;
+  statusCode?: number;
 };
 
 type TError = {
