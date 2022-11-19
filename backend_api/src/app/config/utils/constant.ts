@@ -1,4 +1,6 @@
 import path from 'path';
+import dotenv from 'dotenv';
+dotenv.config();
 
 // Configure PORT
 export const PORT: undefined | number | string = process.env.PORT || 5000;
@@ -23,3 +25,6 @@ export const BASE_ASSET: string = path.join(BASE_PATH, 'public');
 
 export const HIMSI_KLA_MEMBER_PROFILE =
   'https://himsikaliabang.com/assets/member/profile/';
+
+export const SECRET_KEY = process.env.SECRET_KEY;
+export const ADMIN_TOKEN = process.env.ADMIN_TOKEN;

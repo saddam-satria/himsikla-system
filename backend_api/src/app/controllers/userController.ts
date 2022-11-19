@@ -49,6 +49,7 @@ class UserController {
             },
           };
         });
+
         payload.data = user;
 
         if (!success) {

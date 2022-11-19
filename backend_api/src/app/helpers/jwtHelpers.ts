@@ -17,7 +17,7 @@ class JwtHelper implements IJwt {
     secretKey: Secret,
     options?: SignOptions
   ): string {
-    return sign(payload, secretKey, options ? options : { expiresIn: '1d' });
+    return sign(payload, secretKey, options);
   }
   verifyToken(
     token: string,

@@ -8,6 +8,7 @@ class UserRepository {
     gender: true,
     university: true,
     id: true,
+    role_id: true,
     role: {
       select: {
         roleName: true,
@@ -80,6 +81,11 @@ class UserRepository {
             },
           },
         ],
+        AND: {
+          role_id: {
+            not: 99,
+          },
+        },
       },
     });
   }
@@ -98,6 +104,14 @@ class UserRepository {
         ],
       },
       select: this.columns,
+    });
+  }
+  public getUserByEmail(email: string) {
+    return this.userEntity.findFirst({
+      select: this.columns,
+      where: {
+        email,
+      },
     });
   }
 }
