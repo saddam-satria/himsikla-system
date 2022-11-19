@@ -8,6 +8,7 @@ export type TResponse<T> = {
   status: string;
   data: null | T;
   statusCode?: number;
+  totalQuery?: number;
 };
 
 type TError = {

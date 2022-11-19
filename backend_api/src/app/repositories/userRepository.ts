@@ -72,6 +72,13 @@ class UserRepository {
               },
             },
           },
+          {
+            member: {
+              periode: {
+                equals: payload,
+              },
+            },
+          },
         ],
       },
     });

@@ -25,6 +25,19 @@ class UserController {
           query as string
         );
 
+        payload.error = undefined;
+        payload.message = 'GET USER BY EMAIL, NAME, TOKEN, PERIODE';
+        payload.request = query as string;
+        payload.status = 'success';
+        payload.totalData = undefined;
+        payload.nextPage = undefined;
+        payload.nextPage = undefined;
+
+        if (data.length < 1) {
+          payload.statusCode = 404;
+          throw new Error('User Or Member Not Found');
+        }
+
         const user = data.map((user: any) => {
           return {
             ...user,
@@ -36,15 +49,7 @@ class UserController {
             },
           };
         });
-
         payload.data = user;
-        payload.error = undefined;
-        payload.message = 'GET USER BY EMAIL, NAME, TOKEN';
-        payload.request = query as string;
-        payload.status = 'success';
-        payload.totalData = undefined;
-        payload.nextPage = undefined;
-        payload.nextPage = undefined;
 
         if (!success) {
           if (message && message.toLowerCase().includes('no user found')) {
@@ -100,6 +105,7 @@ class UserController {
           ? undefined
           : parseInt(page as string) - 1;
       payload.totalData = users.length;
+      payload.totalQuery = totalData;
       payload.data = users;
 
       return res.status(payload.statusCode ?? 200).json(payload);
