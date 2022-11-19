@@ -10,25 +10,37 @@ class UserController {
   }
 
   public async get(req: Request, res: Response) {
-    const query = req.query;
+    const request = req.query;
     const payload: TResponse<any> = {
       message: 'GET ALL USER',
       status: 'success',
       data: null,
     };
 
-    const { page, take, param } = query;
+    const { page, take, query } = request;
 
     try {
-      if (param) {
+      if (query) {
         const { message, success, data } = await this.getUserByPayload(
-          param as string
+          query as string
         );
 
-        payload.data = data;
+        const user = data.map((user: any) => {
+          return {
+            ...user,
+            member: {
+              ...user.member,
+              image: user.member.image
+                ? `${HIMSI_KLA_MEMBER_PROFILE}${user.member.image}`
+                : null,
+            },
+          };
+        });
+
+        payload.data = user;
         payload.error = undefined;
         payload.message = 'GET USER BY EMAIL, NAME, TOKEN';
-        payload.request = param as string;
+        payload.request = query as string;
         payload.status = 'success';
         payload.totalData = undefined;
         payload.nextPage = undefined;
@@ -96,6 +108,10 @@ class UserController {
       payload.error = {
         message: error.message,
       };
+      payload.data = null;
+      payload.prevPage = undefined;
+      payload.nextPage = undefined;
+      payload.totalData = undefined;
       return res.status(payload.statusCode ?? 400).json(payload);
     }
   }
@@ -117,6 +133,37 @@ class UserController {
         message: error.message,
         data: null,
       };
+    }
+  }
+  public async getUser(req: Request, res: Response) {
+    const payload: TResponse<any> = {
+      message: 'GET USER BY ID OR MEMBER ID',
+      status: 'success',
+      data: null,
+    };
+    const { id } = req.params;
+    try {
+      if (!id) throw new Error('user ID required');
+      const data = await this.userRepository.getUserByID(id as string);
+
+      const user = {
+        ...data,
+        member: {
+          ...data.member,
+          image: data.member?.image
+            ? `${HIMSI_KLA_MEMBER_PROFILE}${data.member.image}`
+            : null,
+        },
+      };
+      payload.data = user;
+      return res.status(payload.statusCode ?? 200).json(payload);
+    } catch (error) {
+      payload.status = 'error';
+      payload.error = {
+        message: error.message,
+      };
+      payload.data = null;
+      return res.status(payload.statusCode ?? 400).json(payload);
     }
   }
 }

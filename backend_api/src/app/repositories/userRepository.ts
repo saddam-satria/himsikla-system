@@ -7,6 +7,7 @@ class UserRepository {
     email: true,
     gender: true,
     university: true,
+    id: true,
     role: {
       select: {
         roleName: true,
@@ -23,6 +24,7 @@ class UserRepository {
         occupation: true,
         status: true,
         phoneNumber: true,
+        id: true,
       },
     },
   };
@@ -47,7 +49,7 @@ class UserRepository {
     return this.result;
   }
   public getUserByPayload(payload: string) {
-    return this.userEntity.findFirstOrThrow({
+    return this.userEntity.findMany({
       select: this.columns,
       where: {
         OR: [
@@ -72,6 +74,23 @@ class UserRepository {
           },
         ],
       },
+    });
+  }
+  public getUserByID(id: string) {
+    return this.userEntity.findFirstOrThrow({
+      where: {
+        OR: [
+          {
+            id,
+          },
+          {
+            member: {
+              id,
+            },
+          },
+        ],
+      },
+      select: this.columns,
     });
   }
 }
