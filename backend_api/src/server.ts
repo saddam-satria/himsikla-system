@@ -11,7 +11,11 @@ import prisma from './app/config/prisma';
   dotenv.config();
   const app = express();
 
-  app.use(cors());
+  app.use(
+    cors({
+      origin: 'http://localhost:3000',
+    })
+  );
   app.use(express.json());
   app.use(express.urlencoded({ extended: true }));
   app.use(logging);
