@@ -1,7 +1,7 @@
 import React from 'react';
 import { createRoot } from 'react-dom/client';
 import App from './App';
-import './index.scss';
+import './tailwind/index.css';
 import ReduxProvider from './redux';
 
 const container = document.getElementById('root');
