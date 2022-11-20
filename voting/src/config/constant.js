@@ -7,3 +7,5 @@ export const FIREABASE_CONFIG = {
   messagingSenderId: process.env.FIREBASE_MESSAGING_SENDER_ID,
   appId: process.env.FIREBASE_APP_ID,
 };
+
+export const BASE_URL = process.env.BASE_URL || 'http://localhost:3000/';
