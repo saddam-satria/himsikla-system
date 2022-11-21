@@ -1,21 +1,24 @@
 import { USER_ERROR, USER_SET_TOKEN } from '../../types';
 
 const getToken = () => (dispatch) => {
-  const tokenStorage = JSON.parse(localStorage.getItem('token'));
+  let tokenStorage;
 
-  if (!tokenStorage) {
+  try {
+    tokenStorage = JSON.parse(localStorage.getItem('token'));
+  } catch (error) {
     dispatch({
       type: USER_ERROR,
-      message: 'Invalid Token',
+      message: 'Somethings Wrong With Local Storage',
     });
-
     return;
   }
 
-  const { token } = tokenStorage;
-  dispatch({
-    type: USER_SET_TOKEN,
-    data: token,
-  });
+  if (tokenStorage) {
+    const { token } = tokenStorage;
+    dispatch({
+      type: USER_SET_TOKEN,
+      data: token,
+    });
+  }
 };
 export default getToken;

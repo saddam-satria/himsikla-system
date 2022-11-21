@@ -1,11 +1,11 @@
 import React from 'react';
-import { useDispatch } from 'react-redux';
+import { useSelector, useDispatch } from 'react-redux';
 import getToken from '../redux/action/user/getToken';
 
 const SetToken = ({ children }) => {
   const render = React.useRef(true);
-
   const dispatch = useDispatch();
+  const userState = useSelector((state) => state.user);
   React.useEffect(() => {
     if (render.current) {
       dispatch(getToken());
@@ -13,7 +13,7 @@ const SetToken = ({ children }) => {
     return () => {
       render.current = false;
     };
-  }, [dispatch]);
+  }, [dispatch, userState]);
 
   return children;
 };

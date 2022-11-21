@@ -1,4 +1,10 @@
-import { USER_ERROR, USER_LOADING, USER_LOGIN, USER_SET_TOKEN } from '../types';
+import {
+  GET_USER,
+  USER_ERROR,
+  USER_LOADING,
+  USER_LOGIN,
+  USER_SET_TOKEN,
+} from '../types';
 
 const initalState = {
   data: null,
@@ -9,6 +15,14 @@ const initalState = {
 
 const user = (state = initalState, action) => {
   switch (action.type) {
+    case GET_USER:
+      return {
+        ...state,
+        data: action.data,
+        loading: false,
+        error: false,
+        message: null,
+      };
     case USER_LOGIN:
       return {
         ...state,

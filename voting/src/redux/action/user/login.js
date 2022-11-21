@@ -9,7 +9,6 @@ const loginReduxAction = (email, token) => (dispatch) => {
 
   dispatch({
     type: USER_LOADING,
-    loading: true,
   });
   axios
     .post('login', payload)
@@ -17,7 +16,7 @@ const loginReduxAction = (email, token) => (dispatch) => {
       const { data } = response;
 
       if (data.status.includes('error')) throw new Error(data.message);
-
+      localStorage.clear();
       localStorage.setItem('token', JSON.stringify({ token: data.data }));
 
       dispatch({

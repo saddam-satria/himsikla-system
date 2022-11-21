@@ -1,8 +1,11 @@
 import React from 'react';
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import NavbarComponent from '../components/NavbarComponent';
+import Authentication from '../middlewares/authentication';
+import GetUser from '../middlewares/getUser';
 import SetToken from '../middlewares/setToken';
 import Homepage from '../pages/homepage';
+import Voting from '../pages/voting';
 
 export function Routing() {
   return (
@@ -16,6 +19,16 @@ export function Routing() {
               <SetToken>
                 <Homepage />
               </SetToken>
+            }
+          />
+          <Route
+            path="/voting"
+            element={
+              <GetUser>
+                <Authentication>
+                  <Voting />
+                </Authentication>
+              </GetUser>
             }
           />
         </Routes>

@@ -50,6 +50,7 @@ module.exports = {
     'no-console': 'off',
     'no-duplicate-imports': 'warn',
     'no-unused-vars': 'warn',
+    'spaced-comment': 'off',
     'import/order': [
       'warn',
       {
