@@ -1,9 +1,12 @@
 import React from 'react';
-import { Link, useLocation } from 'react-router-dom';
+import { Link, useLocation, useSearchParams } from 'react-router-dom';
 import { BASE_URL } from '../config/constant';
 
 const NavbarComponent = () => {
   const [isNavbarActive, setIsNavbarActive] = React.useState(false);
+  const [searchParams] = useSearchParams();
+
+  const current_user= searchParams.get('current_user');
 
   const navbarAction = (e) => {
     e.preventDefault();
@@ -15,6 +18,10 @@ const NavbarComponent = () => {
     {
       display: 'home',
       to: '/',
+    },
+    {
+      display: 'profile',
+      to: `/profile?current_user=${current_user}`,
     },
   ];
 
@@ -58,8 +65,10 @@ const NavbarComponent = () => {
                     key={index}
                     className={`${
                       isNavbarActive ? 'translate-x-0' : '-translate-x-full'
-                    } ${
-                      router.pathname.includes(menu.to) && 'font-bold'
+                    } ${router.pathname.includes(menu.to) && 'font-bold'} ${
+                      !router.pathname.includes('voting') &&
+                      menu.display.includes('profile') &&
+                      'hidden'
                     } text-white text-sm  capitalize transition-transform ease-in-out delay-150 duration-500 sm:translate-x-0 sm:transition-none`}
                   >
                     <Link to={menu.to}>{menu.display}</Link>

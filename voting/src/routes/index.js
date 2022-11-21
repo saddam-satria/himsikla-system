@@ -5,6 +5,7 @@ import Authentication from '../middlewares/authentication';
 import GetUser from '../middlewares/getUser';
 import SetToken from '../middlewares/setToken';
 import Homepage from '../pages/homepage';
+import Profile from '../pages/profile';
 import Voting from '../pages/voting';
 
 export function Routing() {
@@ -27,6 +28,24 @@ export function Routing() {
               <GetUser>
                 <Authentication>
                   <Voting />
+                </Authentication>
+              </GetUser>
+            }
+          />
+          <Route
+            path="*"
+            element={
+              <div>
+                <span>not found</span>
+              </div>
+            }
+          />
+          <Route
+            path="/profile"
+            element={
+              <GetUser>
+                <Authentication>
+                  <Profile />
                 </Authentication>
               </GetUser>
             }
