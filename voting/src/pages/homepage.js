@@ -35,7 +35,7 @@ function Homepage() {
             setiap proses / kegiatan yang akan dilaksanakan oleh{' '}
             <span className="uppercase">HIMSI KLA</span> E pemilu juga merupakan
             bagian dari himsi kla smart system yaitu sistem yang dimiliki oleh
-            <span className="uppercase">HIMSI KLA</span>
+            <span className="uppercase"> HIMSI KLA</span>
           </p>
         </div>
         <div className="w-full h-full order-1 sm:order-2">

@@ -33,14 +33,6 @@ export function Routing() {
             }
           />
           <Route
-            path="*"
-            element={
-              <div>
-                <span>not found</span>
-              </div>
-            }
-          />
-          <Route
             path="/profile"
             element={
               <GetUser>
@@ -48,6 +40,14 @@ export function Routing() {
                   <Profile />
                 </Authentication>
               </GetUser>
+            }
+          />
+          <Route
+            path="*"
+            element={
+              <div>
+                <span>not found</span>
+              </div>
             }
           />
         </Routes>
