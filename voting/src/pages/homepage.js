@@ -1,6 +1,7 @@
 import React from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { Link } from 'react-router-dom';
+import CardComponent from '../components/CardComponent';
 import { BASE_URL } from '../config/constant';
 import loginReduxAction from '../redux/action/user/login';
 
@@ -40,7 +41,7 @@ function Homepage() {
         </div>
         <div className="w-full h-full order-1 sm:order-2">
           <img
-            src={`${BASE_URL}assets/image/maskot.png`}
+            src={`${BASE_URL}assets/image/undraw_instant_analysis_re_mid5.svg`}
             alt="election day"
             className="w-full h-full lg:h-96 object-contain"
           />
@@ -52,28 +53,9 @@ function Homepage() {
           <h5 className="text-blue-800 font-bold text-xl">Calon Kandidat</h5>
         </div>
 
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8">
+        <div className="grid grid-cols-1 sm:grid-cols-2 xl:grid-cols-4 gap-8">
           {[1, 2, 3, 4].map((item) => {
-            return (
-              <div className="rounded shadow-lg" key={item}>
-                <div className="h-80">
-                  <img
-                    src={
-                      'https://cdn0-production-images-kly.akamaized.net/e3RkQl8koPGNOhDvC6HNf14-XqI=/640x640/smart/filters:quality(75):strip_icc():format(jpeg)/kly-media-production/medias/4086985/original/021883000_1657675968-131934218_679092246308460_2005924033613967069_n.jpg'
-                    }
-                    className="w-full object-cover h-full object-center"
-                    alt="profile"
-                  />
-                </div>
-                <div className="py-8 px-4">
-                  <h5 className="text-lg font-bold text-blue-800">
-                    Nama Kandidat
-                  </h5>
-                  <h6 className="text-md text-gray-400">Periode</h6>
-                  <span className="text-md text-gray-400">Jabatan</span>
-                </div>
-              </div>
-            );
+            return <CardComponent key={item} />;
           })}
         </div>
       </section>

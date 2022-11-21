@@ -28,13 +28,13 @@ const NavbarComponent = () => {
   const router = useLocation();
 
   return (
-    <div className="fixed w-full top-0 py-4 bg-blue-800 sm:static">
+    <div className="fixed w-full top-0 py-2 bg-blue-800 sm:static z-10">
       <div className="container mx-auto px-0 sm:px-4">
         <div className="flex sm:items-center">
           <div className="flex items-center space-x-6 z-10 ml-6 sm:static sm:ml-0 sm:z-0">
             <img
               src={`${BASE_URL}assets/image/logo_himsi.png`}
-              className="w-12 h-12 object-contain"
+              className="w-10 h-10 object-contain"
               alt="HIMSI KLA"
             />
             <h6 className="text-lg font-bold text-blue-50 ">E PEMILU</h6>
