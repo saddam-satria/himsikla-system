@@ -1,6 +1,7 @@
 import React from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { Link } from 'react-router-dom';
+import validator from 'validator';
 import CardComponent from '../components/CardComponent';
 import ModalComponent from '../components/ModalComponent';
 import { BASE_URL } from '../config/constant';
@@ -20,6 +21,14 @@ function Homepage() {
   const startVoting = (e) => {
     e.preventDefault();
 
+    if (!validator.isEmail(payload.email)) {
+      setErrorMessage('format email salah');
+      setPayload({
+        ...payload,
+        email: '',
+      });
+      return;
+    }
     dispatch(loginReduxAction(payload.email, payload.token));
     setPayload({
       email: '',
