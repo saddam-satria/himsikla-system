@@ -18,10 +18,14 @@ const Admin = () => {
     () => Math.round(memberState.totalData / take),
     [memberState, take]
   );
-  const pages = useMemo(() => [10, 20, 30, 40, 50], []);
+  const pages = useMemo(
+    () => [10, 20, 30, 40, 50, memberState.totalData],
+    [memberState]
+  );
   const dispatch = useDispatch();
 
   React.useEffect(() => {
+    setQuery('');
     dispatch(getMembers(token, page, take));
   }, [page, token, dispatch, take]);
 
@@ -141,6 +145,12 @@ const Admin = () => {
               })}
           </tbody>
         </table>
+        {memberState.error &&
+          memberState.message.includes('User Or Member Not Found') && (
+            <div className="flex justify-center border border-gray-200">
+              <span className="text-md py-4">user tidak ditemukan</span>
+            </div>
+          )}
       </div>
       <div className="py-2 flex items-center">
         <div className="flex flex-col space-y-1">
@@ -151,15 +161,21 @@ const Admin = () => {
           >
             {pages.map((pageNumber, index) => {
               return (
-                <option selected={pageNumber === take} key={index}>
-                  {pageNumber}
+                <option
+                  value={pageNumber}
+                  selected={pageNumber === take}
+                  key={index}
+                >
+                  {pageNumber === memberState.totalData ? 'All' : pageNumber}
                 </option>
               );
             })}
           </select>
-          <span className="text-sm text-gray-400 lowercase">
-            page {page} dari {endPage}
-          </span>
+          {!query && (
+            <span className="text-sm text-gray-400 lowercase">
+              page {page} dari {endPage}
+            </span>
+          )}
         </div>
         {!query && (
           <div className="flex space-x-1 ml-auto">
