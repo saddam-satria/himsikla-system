@@ -13,7 +13,9 @@ const GetUser = ({ children }) => {
 
   React.useEffect(() => {
     if (render) {
-      if (!currentUser) return navigate('/');
+      if (!currentUser) {
+        window.location.href = '/';
+      }
     }
 
     return () => {

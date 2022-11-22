@@ -2,8 +2,10 @@ import React from 'react';
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import NavbarComponent from '../components/NavbarComponent';
 import Authentication from '../middlewares/authentication';
+import Authorization from '../middlewares/authorization';
 import GetUser from '../middlewares/getUser';
 import SetToken from '../middlewares/setToken';
+import Admin from '../pages/admin';
 import Homepage from '../pages/homepage';
 import Profile from '../pages/profile';
 import Voting from '../pages/voting';
@@ -48,6 +50,16 @@ export function Routing() {
               <div>
                 <span>not found</span>
               </div>
+            }
+          />
+          <Route
+            path="/admin"
+            element={
+              <GetUser>
+                <Authorization>
+                  <Admin />
+                </Authorization>
+              </GetUser>
             }
           />
         </Routes>

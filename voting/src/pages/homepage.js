@@ -97,13 +97,24 @@ function Homepage() {
                   pilih ketua dpc kaliabang sesuai dengan pilihan anda sendiri,
                   setiap account hanya bisa di gunakan sekali saja
                 </p>
-                <div>
-                  <Link
-                    to={`/voting?current_user=${currentUser}`}
-                    className="px-6 rounded-md py-1 bg-blue-800 text-white hover:bg-blue-600"
-                  >
-                    ke halaman pemilu
-                  </Link>
+                <div className="flex flex-col space-y-4">
+                  <div>
+                    {' '}
+                    <Link
+                      to={`/voting?current_user=${currentUser}`}
+                      className="px-6 rounded-md py-1 bg-blue-800 text-white hover:bg-blue-600"
+                    >
+                      ke halaman pemilu
+                    </Link>
+                  </div>
+                  <div>
+                    <Link
+                      to={`/admin?current_user=${currentUser}`}
+                      className="px-6 rounded-md py-1 bg-blue-800 text-white hover:bg-blue-600"
+                    >
+                      ke halaman admin
+                    </Link>
+                  </div>
                 </div>
               </div>
             )}
@@ -119,7 +130,7 @@ function Homepage() {
                     }}
                   />
                   <input
-                    type="text"
+                    type="password"
                     placeholder="masukan token anda"
                     className="py-2 px-4 bg-blue-50 text-black rounded-lg focus:outline-none hover:outline-none hover:border-none focus:border-none"
                     onChange={(e) => {

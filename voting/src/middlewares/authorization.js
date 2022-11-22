@@ -1,23 +1,36 @@
 import React from 'react';
-import { useSelector } from 'react-redux';
-import { useNavigate } from 'react-router-dom';
+import { useSelector, useDispatch } from 'react-redux';
+import { useNavigate, useSearchParams } from 'react-router-dom';
+import getMembers from '../redux/action/member/getMembers';
 
 const Authorization = ({ children }) => {
   const render = React.useRef(true);
-  const userState = useSelector((state) => state.user);
+  const dispatch = useDispatch();
+  const [searchParams] = useSearchParams();
   const navigate = useNavigate();
+  const currentUser = searchParams.get('current_user');
+
+  const memberState = useSelector((state) => state.member);
 
   React.useEffect(() => {
     if (render) {
-      const { data } = userState;
-      console.log(data);
-      if (data.role_id !== 99) return navigate('/voting');
+      dispatch(getMembers(currentUser, 1));
     }
 
     return () => {
       render.current = false;
     };
-  }, [navigate, userState]);
+  }, [currentUser, dispatch]);
+
+  React.useEffect(() => {
+    if (render) {
+      if (memberState.error) return navigate('/');
+    }
+
+    return () => {
+      render.current = false;
+    };
+  }, [navigate, memberState]);
 
   return children;
 };

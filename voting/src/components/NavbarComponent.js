@@ -1,11 +1,18 @@
 import React from 'react';
-import { Link, useLocation, useSearchParams } from 'react-router-dom';
+import { useSelector } from 'react-redux';
+import {
+  Link,
+  useLocation,
+  useNavigate,
+  useSearchParams,
+} from 'react-router-dom';
 import { BASE_URL } from '../config/constant';
 
 const NavbarComponent = () => {
   const [isNavbarActive, setIsNavbarActive] = React.useState(false);
   const [searchParams] = useSearchParams();
 
+  const stateUser = useSelector((state) => state.user);
   const currentUser = searchParams.get('current_user');
 
   const navbarAction = (e) => {
@@ -26,6 +33,18 @@ const NavbarComponent = () => {
   ];
 
   const router = useLocation();
+  const navigate = useNavigate();
+
+  const logout = (e) => {
+    e.preventDefault();
+
+    try {
+      localStorage.removeItem('token');
+      window.location.href = '/';
+    } catch (error) {
+      navigate('/');
+    }
+  };
 
   return (
     <div className="fixed w-full top-0 py-2 bg-blue-800 sm:static z-10">
@@ -75,6 +94,29 @@ const NavbarComponent = () => {
                   </span>
                 );
               })}
+
+              {router.pathname.includes('admin') && (
+                <Link
+                  to={'/'}
+                  className={`
+                } text-white text-sm  capitalize transition-transform ease-in-out delay-150 duration-500 sm:translate-x-0 sm:transition-none`}
+                >
+                  daftar peserta
+                </Link>
+              )}
+
+              {router.pathname.includes('admin') ||
+              (!stateUser.error && stateUser.data) ? (
+                <span
+                  onClick={logout}
+                  className={`
+                } text-white text-sm  capitalize transition-transform ease-in-out delay-150 duration-500 sm:translate-x-0 sm:transition-none cursor-pointer`}
+                >
+                  Logout
+                </span>
+              ) : (
+                ''
+              )}
             </div>
           </div>
         </div>
