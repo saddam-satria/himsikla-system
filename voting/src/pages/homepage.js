@@ -15,11 +15,37 @@ function Homepage() {
   const userState = useSelector((state) => state.user);
   const currentUser = userState.data;
 
+  const [errorMessage, setErrorMessage] = React.useState('');
+
   const startVoting = (e) => {
     e.preventDefault();
 
     dispatch(loginReduxAction(payload.email, payload.token));
+    setPayload({
+      email: '',
+      token: '',
+    });
   };
+
+  const timeout = React.useRef(null);
+
+  React.useEffect(() => {
+    if (userState.error && userState.message.includes('Email Or Token Error')) {
+      setErrorMessage('anggota tidak di temukan');
+    }
+  }, [userState]);
+
+  React.useEffect(() => {
+    timeout.current = setTimeout(() => {
+      if (errorMessage) {
+        setErrorMessage('');
+      }
+    }, 600);
+
+    return () => {
+      clearTimeout(timeout.current);
+    };
+  }, [errorMessage]);
 
   const [modalVision, setModalVision] = React.useState(false);
 
@@ -88,9 +114,13 @@ function Homepage() {
             <h3 className="text-xl lg:text-3xl capitalize font-extrabold text-blue-800">
               Voting Sekarang !!!
             </h3>
+
             <span className="text-sm text-gray-400 uppercase">
               pemilihan ketua cabang DPC kaliabang
             </span>
+            {errorMessage && (
+              <span className="text-sm text-red-500">{errorMessage}</span>
+            )}
             {currentUser && (
               <div className="flex flex-col space-y-4">
                 <p className="text-gray-400 capitalize">
@@ -124,6 +154,7 @@ function Homepage() {
                   <input
                     type="text"
                     placeholder="masukan email anda"
+                    value={payload.email}
                     className="py-2 px-4 bg-blue-50 text-black rounded-lg focus:outline-none hover:outline-none hover:border-none focus:border-none"
                     onChange={(e) => {
                       setPayload({ ...payload, email: e.target.value });
@@ -136,6 +167,7 @@ function Homepage() {
                     onChange={(e) => {
                       setPayload({ ...payload, token: e.target.value });
                     }}
+                    value={payload.token}
                   />
                   <div className="ml-auto">
                     <button

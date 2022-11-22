@@ -1,9 +1,9 @@
 import React from 'react';
 import { BASE_URL } from '../config/constant';
 
-const CardComponent = ({ image, key, buttonClick, buttonText }) => {
+const CardComponent = ({ image, buttonClick, buttonText }) => {
   return (
-    <div className="rounded shadow-lg" key={key}>
+    <div className="rounded shadow-lg">
       <div className="h-56">
         <div className=" w-full h-full bg-blue-800">
           <img

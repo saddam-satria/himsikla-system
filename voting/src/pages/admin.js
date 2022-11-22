@@ -1,8 +1,8 @@
 import React, { useState, useMemo, useRef } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { useSearchParams } from 'react-router-dom';
-import getMembers from '../redux/action/member/getMembers';
 import getMemberByQuery from '../redux/action/member/getMemberByQuery';
+import getMembers from '../redux/action/member/getMembers';
 
 const Admin = () => {
   const memberState = useSelector((state) => state.member);
