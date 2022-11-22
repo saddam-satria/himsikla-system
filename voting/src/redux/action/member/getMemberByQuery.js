@@ -2,12 +2,12 @@ import axios from '../../../config/axios';
 import { headers } from '../../../helpers/headers';
 import { GET_MEMBERS, MEMBER_ERROR, MEMBER_LOADING } from '../../types';
 
-const getMembers = (token, page, take) => (dispatch) => {
+const getMemberByQuery = (token, query) => (dispatch) => {
   dispatch({
     type: MEMBER_LOADING,
   });
   axios
-    .get(`users?page=${page}&take=${take ?? 10}`, {
+    .get(`users?query=${query}`, {
       headers: headers(token),
     })
     .then((response) => {
@@ -27,4 +27,4 @@ const getMembers = (token, page, take) => (dispatch) => {
     });
 };
 
-export default getMembers;
+export default getMemberByQuery;

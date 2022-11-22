@@ -16,6 +16,7 @@ const member = (state = initalState, action) => {
         loading: false,
         error: false,
         message: null,
+        totalData: action.totalData,
       };
 
     case MEMBER_ERROR:

@@ -51,6 +51,7 @@ module.exports = {
     'no-duplicate-imports': 'warn',
     'no-unused-vars': 'warn',
     'spaced-comment': 'off',
+    'consistent-return': 'off',
     'import/order': [
       'warn',
       {

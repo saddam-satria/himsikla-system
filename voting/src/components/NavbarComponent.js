@@ -101,7 +101,7 @@ const NavbarComponent = () => {
                   className={`
                 } text-white text-sm  capitalize transition-transform ease-in-out delay-150 duration-500 sm:translate-x-0 sm:transition-none`}
                 >
-                  daftar peserta
+                  daftar kandidat
                 </Link>
               )}
 

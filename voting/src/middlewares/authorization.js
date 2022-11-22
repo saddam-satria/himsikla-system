@@ -24,7 +24,8 @@ const Authorization = ({ children }) => {
 
   React.useEffect(() => {
     if (render) {
-      if (memberState.error) return navigate('/');
+      if (memberState.error && memberState.message.includes('not admin'))
+        return navigate('/');
     }
 
     return () => {
