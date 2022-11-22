@@ -1,9 +1,13 @@
 import React from 'react';
+import ClockComponent from '../components/ClockComponent';
 import { BASE_URL } from '../config/constant';
 
 function Voting() {
   return (
     <div>
+      <div className="my-2">
+        <ClockComponent />
+      </div>
       <div className="grid grid-cols-1 sm:grid-cols-2 xl:grid-cols-4 gap-8">
         {[1, 2, 3, 4].map((item) => {
           return (
