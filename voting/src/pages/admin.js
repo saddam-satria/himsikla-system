@@ -1,6 +1,7 @@
 import React, { useState, useMemo, useRef } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { useSearchParams } from 'react-router-dom';
+import getCandidates from '../redux/action/candidate/getCandidates';
 import getMemberByQuery from '../redux/action/member/getMemberByQuery';
 import getMembers from '../redux/action/member/getMembers';
 
@@ -13,6 +14,7 @@ const Admin = () => {
   const token = searchParams.get('current_user');
 
   const timeout = useRef(null);
+  const render = useRef(true);
 
   const endPage = useMemo(
     () => Math.round(memberState.totalData / take),
@@ -58,6 +60,33 @@ const Admin = () => {
       clearTimeout(timeout.current);
     };
   }, [query, dispatch, token]);
+
+  React.useEffect(() => {
+    if (render.current) {
+      dispatch(getCandidates());
+    }
+    return () => {
+      render.current = false;
+    };
+  }, [dispatch]);
+
+  const selectMemberToCandidate = (e, data) => {
+    e.preventDefault();
+    const { email, gender, member } = data;
+    const { nim, occupation, address, periode, phoneNumber } = member;
+    const payload = {
+      email,
+      nim,
+      occupation,
+      address,
+      periode,
+      phone: phoneNumber,
+      gender,
+      likes: 0,
+    };
+
+    console.log(payload);
+  };
 
   return (
     <div>
@@ -136,7 +165,10 @@ const Admin = () => {
                     <td className="py-4 px-6 lowercase"> {user.email}</td>
                     <td className="py-4 px-6"> {user.member.nim}</td>
                     <td className="py-4 px-6">
-                      <button className="px-6 rounded-md py-1 text-sm bg-blue-800 text-white hover:bg-blue-600 capitalize">
+                      <button
+                        onClick={(e) => selectMemberToCandidate(e, user)}
+                        className="px-6 rounded-md py-1 text-sm bg-blue-800 text-white hover:bg-blue-600 capitalize"
+                      >
                         kandidat
                       </button>
                     </td>
@@ -156,16 +188,13 @@ const Admin = () => {
         <div className="flex flex-col space-y-1">
           <select
             id="countries"
+            value={take}
             onChange={(e) => setTake(e.target.value)}
             className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-1"
           >
             {pages.map((pageNumber, index) => {
               return (
-                <option
-                  value={pageNumber}
-                  selected={pageNumber === take}
-                  key={index}
-                >
+                <option value={pageNumber} key={index}>
                   {pageNumber === memberState.totalData ? 'All' : pageNumber}
                 </option>
               );
