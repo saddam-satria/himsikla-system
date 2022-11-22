@@ -61,7 +61,7 @@ function Homepage() {
             return (
               <CardComponent
                 key={item}
-                buttonText={'Visi & Misi'}
+                buttonText={'Profile'}
                 buttonClick={() => setModalVision(true)}
               />
             );
@@ -71,17 +71,6 @@ function Homepage() {
           <div className="py-2 flex flex-col space-y-2">
             <span className="text-md text-blue-600 font-bold uppercase">
               Visi
-            </span>
-            <p className="text-sm text-gray-500 text-justify">
-              Lorem ipsum dolor sit amet, consectetur adipisicing elit. Animi
-              earum dignissimos reiciendis, provident, officiis minima hic
-              placeat minus excepturi est sed quisquam ea beatae eveniet
-              voluptatem, aperiam repellat sint culpa.
-            </p>
-          </div>
-          <div className="py-2 flex flex-col space-y-2">
-            <span className="text-md text-blue-600 font-bold uppercase">
-              misi
             </span>
             <p className="text-sm text-gray-500 text-justify">
               Lorem ipsum dolor sit amet, consectetur adipisicing elit. Animi
