@@ -5,6 +5,7 @@ import validator from 'validator';
 import CardComponent from '../components/CardComponent';
 import ModalComponent from '../components/ModalComponent';
 import { BASE_URL } from '../config/constant';
+import getCandidates from '../redux/action/candidate/getCandidates';
 import loginReduxAction from '../redux/action/user/login';
 
 function Homepage() {
@@ -55,6 +56,10 @@ function Homepage() {
       clearTimeout(timeout.current);
     };
   }, [errorMessage]);
+
+  React.useEffect(() => {
+    dispatch(getCandidates());
+  }, [dispatch]);
 
   const [modalVision, setModalVision] = React.useState(false);
 

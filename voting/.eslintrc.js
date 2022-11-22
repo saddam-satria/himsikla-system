@@ -52,6 +52,7 @@ module.exports = {
     'no-unused-vars': 'warn',
     'spaced-comment': 'off',
     'consistent-return': 'off',
+    'array-callback-return': 'off',
     'import/order': [
       'warn',
       {
