@@ -2,6 +2,7 @@ import React from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { Link } from 'react-router-dom';
 import CardComponent from '../components/CardComponent';
+import ModalComponent from '../components/ModalComponent';
 import { BASE_URL } from '../config/constant';
 import loginReduxAction from '../redux/action/user/login';
 
@@ -19,6 +20,8 @@ function Homepage() {
 
     dispatch(loginReduxAction(payload.email, payload.token));
   };
+
+  const [modalVision, setModalVision] = React.useState(false);
 
   return (
     <div>
@@ -55,9 +58,39 @@ function Homepage() {
 
         <div className="grid grid-cols-1 sm:grid-cols-2 xl:grid-cols-4 gap-8">
           {[1, 2, 3, 4].map((item) => {
-            return <CardComponent key={item} />;
+            return (
+              <CardComponent
+                key={item}
+                buttonText={'Visi & Misi'}
+                buttonClick={() => setModalVision(true)}
+              />
+            );
           })}
         </div>
+        <ModalComponent header active={modalVision} setActive={setModalVision}>
+          <div className="py-2 flex flex-col space-y-2">
+            <span className="text-md text-blue-600 font-bold uppercase">
+              Visi
+            </span>
+            <p className="text-sm text-gray-500 text-justify">
+              Lorem ipsum dolor sit amet, consectetur adipisicing elit. Animi
+              earum dignissimos reiciendis, provident, officiis minima hic
+              placeat minus excepturi est sed quisquam ea beatae eveniet
+              voluptatem, aperiam repellat sint culpa.
+            </p>
+          </div>
+          <div className="py-2 flex flex-col space-y-2">
+            <span className="text-md text-blue-600 font-bold uppercase">
+              misi
+            </span>
+            <p className="text-sm text-gray-500 text-justify">
+              Lorem ipsum dolor sit amet, consectetur adipisicing elit. Animi
+              earum dignissimos reiciendis, provident, officiis minima hic
+              placeat minus excepturi est sed quisquam ea beatae eveniet
+              voluptatem, aperiam repellat sint culpa.
+            </p>
+          </div>
+        </ModalComponent>
       </section>
 
       <section className="my-16 lg:my-0">

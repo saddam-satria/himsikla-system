@@ -1,7 +1,7 @@
 import React from 'react';
 import { BASE_URL } from '../config/constant';
 
-const CardComponent = ({ image, key }) => {
+const CardComponent = ({ image, key, buttonClick, buttonText }) => {
   return (
     <div className="rounded shadow-lg" key={key}>
       <div className="h-56">
@@ -30,8 +30,11 @@ const CardComponent = ({ image, key }) => {
           <span className="text-md text-gray-400">Jabatan</span>
         </div>
         <div className="flex justify-center py-4">
-          <button className="px-6 rounded-md py-1 bg-blue-800 text-white hover:bg-blue-600">
-            Visi & Misi
+          <button
+            onClick={buttonClick}
+            className="px-6 rounded-md py-1 bg-blue-800 text-white hover:bg-blue-600"
+          >
+            {buttonText}
           </button>
         </div>
       </div>
