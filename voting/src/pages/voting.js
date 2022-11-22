@@ -3,10 +3,16 @@ import ClockComponent from '../components/ClockComponent';
 import { BASE_URL } from '../config/constant';
 
 function Voting() {
+  const currentUser = true;
   return (
     <div>
       <div className="my-2">
         <ClockComponent />
+        <div className="py-2">
+          <span className="text-lg font-bold text-blue-800">
+            Total Suara Masuk : 0
+          </span>
+        </div>
       </div>
       <div className="grid grid-cols-1 sm:grid-cols-2 xl:grid-cols-4 gap-8">
         {[1, 2, 3, 4].map((item) => {
@@ -36,9 +42,15 @@ function Voting() {
                   <span className="text-md text-gray-400">Jabatan</span>
                 </div>
                 <div className="flex justify-center py-4">
-                  <button className="px-6 rounded-md py-1 bg-blue-800 text-white hover:bg-blue-600">
-                    Pilih
-                  </button>
+                  {currentUser ? (
+                    <span className="py-2 px-3 rounded-full border-2 border-blue-800">
+                      80
+                    </span>
+                  ) : (
+                    <button className="px-6 rounded-md py-1 bg-blue-800 text-white hover:bg-blue-600">
+                      Pilih
+                    </button>
+                  )}
                 </div>
               </div>
             </div>
