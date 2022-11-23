@@ -65,17 +65,13 @@ function Homepage() {
   }, [dispatch, candidateState]);
 
   const [modalVision, setModalVision] = React.useState(false);
+  const [currentProfile, setCurrentProfile] = React.useState('');
 
-  const [profileCandidate, setProfile] = React.useState('');
-
-  const profileClick = (e, id) => {
+  const profileClick = (e, data) => {
     e.preventDefault();
-    setModalVision(!modalVision);
+    setModalVision(true);
 
-    const { profile } = candidateState.data.filter(
-      (candidate) => candidate.id === id
-    );
-    setProfile(profile);
+    setCurrentProfile(data.profile);
   };
 
   return (
@@ -127,7 +123,12 @@ function Homepage() {
                 <div key={index}>
                   <CardComponent
                     buttonText={'Profile'}
-                    buttonClick={() => setModalVision(true)}
+                    buttonClick={(e) =>
+                      profileClick(e, {
+                        id: candidate.id,
+                        profile: candidate.profile,
+                      })
+                    }
                     name={candidate.name}
                     occupation={candidate.occupation}
                     periode={candidate.periode}
@@ -136,14 +137,16 @@ function Homepage() {
                   <ModalComponent
                     header
                     active={modalVision}
-                    setActive={(e) => profileClick(e, candidate.id)}
+                    setActive={() => setModalVision(false)}
                   >
                     <div className="py-2 flex flex-col space-y-2">
                       <span className="text-md text-blue-600 font-bold uppercase">
                         Profile
                       </span>
                       <p className="text-sm text-gray-500 text-justify">
-                        {profileCandidate}
+                        {currentProfile.length > 0
+                          ? currentProfile
+                          : 'belum mempunyai profile'}
                       </p>
                     </div>
                   </ModalComponent>

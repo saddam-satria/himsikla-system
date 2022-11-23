@@ -2,6 +2,7 @@ import React, { useRef } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import deleteCandidate from '../../redux/action/candidate/deleteCandidate';
 import getCandidates from '../../redux/action/candidate/getCandidates';
+import updateProfile from '../../redux/action/candidate/updateProfile';
 
 const Candidates = () => {
   const candidateState = useSelector((state) => state.candidate);
@@ -25,6 +26,31 @@ const Candidates = () => {
     e.preventDefault();
 
     dispatch(deleteCandidate(id));
+  };
+
+  const [profile, setProfile] = React.useState('');
+  const [formEditProfile, setFormEditProfile] = React.useState(false);
+  const [selectedCandidate, setSelectedCandidate] = React.useState('');
+
+  const editProfile = (e, currentProfile, id) => {
+    e.preventDefault();
+
+    setFormEditProfile(true);
+    setProfile(currentProfile);
+    setSelectedCandidate(id);
+  };
+
+  const updateProfileHandler = (e) => {
+    e.preventDefault();
+    const payload = {
+      id: selectedCandidate,
+      profile,
+    };
+
+    dispatch(updateProfile(payload.id, payload.profile));
+    setProfile('');
+    setFormEditProfile(false);
+    setSelectedCandidate('');
   };
 
   return (
@@ -61,6 +87,9 @@ const Candidates = () => {
                 Profile
               </th>
               <th scope="col" className="py-3 px-6">
+                Edit Profile
+              </th>
+              <th scope="col" className="py-3 px-6">
                 Action
               </th>
             </tr>
@@ -88,18 +117,20 @@ const Candidates = () => {
                     </td>
                     <td className="py-4 px-6 lowercase"> {candidate.email}</td>
                     <td className="py-4 px-6"> {candidate.nim}</td>
+                    <td className="py-4 px-6">
+                      {' '}
+                      {candidate.profile ? candidate.profile : '-'}
+                    </td>
 
                     <td className="py-4 px-6">
-                      {candidate.profile ? (
-                        `${candidate.profile.slice(0, 10)}...`
-                      ) : (
-                        <button
-                          onClick={(e) => deleteCandidateByID(e, candidate.id)}
-                          className="px-6 rounded-md py-1 text-sm bg-blue-800 text-white hover:bg-blue-600 capitalize"
-                        >
-                          edit
-                        </button>
-                      )}
+                      <button
+                        onClick={(e) =>
+                          editProfile(e, candidate.profile, candidate.id)
+                        }
+                        className="px-6 rounded-md py-1 text-sm bg-blue-800 text-white hover:bg-blue-600 capitalize"
+                      >
+                        edit
+                      </button>
                     </td>
 
                     <td className="py-4 px-6">
@@ -121,6 +152,39 @@ const Candidates = () => {
           </div>
         )}
       </div>
+      {formEditProfile && (
+        <div className="my-32 grid grid-cols-1 lg:grid-cols-2">
+          <div className="flex flex-col space-y-4">
+            <label
+              htmlFor="profile"
+              className="block mb-2 text-sm font-medium text-gray-900"
+            >
+              Profile
+            </label>
+            <textarea
+              type="text"
+              id="profile"
+              className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5"
+              placeholder="tuliskan biografi singkat"
+              rows={3}
+              cols={3}
+              onChange={(e) => setProfile(e.target.value)}
+              value={profile}
+            />
+
+            <div className="flex">
+              <div className="ml-auto">
+                <button
+                  onClick={updateProfileHandler}
+                  className="px-6 rounded-md py-1 text-sm bg-blue-800 text-white hover:bg-blue-600 capitalize"
+                >
+                  edit
+                </button>
+              </div>
+            </div>
+          </div>
+        </div>
+      )}
     </div>
   );
 };

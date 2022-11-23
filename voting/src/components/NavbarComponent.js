@@ -95,15 +95,24 @@ const NavbarComponent = () => {
                 );
               })}
 
-              {router.pathname.includes('admin') && (
-                <Link
-                  to={`/admin/candidates?current_user=${currentUser}`}
-                  className={`
-                } text-white text-sm  capitalize transition-transform ease-in-out delay-150 duration-500 sm:translate-x-0 sm:transition-none`}
-                >
-                  daftar kandidat
-                </Link>
-              )}
+              {router.pathname.includes('admin') &&
+                (!router.pathname.includes('candidates') ? (
+                  <Link
+                    to={`/admin/candidates?current_user=${currentUser}`}
+                    className={`
+              } text-white text-sm  capitalize transition-transform ease-in-out delay-150 duration-500 sm:translate-x-0 sm:transition-none`}
+                  >
+                    daftar kandidat
+                  </Link>
+                ) : (
+                  <Link
+                    to={`/admin?current_user=${currentUser}`}
+                    className={`
+              } text-white text-sm  capitalize transition-transform ease-in-out delay-150 duration-500 sm:translate-x-0 sm:transition-none`}
+                  >
+                    daftar anggota
+                  </Link>
+                ))}
 
               {router.pathname.includes('admin') ||
               (!stateUser.error && stateUser.data) ? (
