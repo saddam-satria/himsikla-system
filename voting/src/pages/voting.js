@@ -1,8 +1,25 @@
 import React from 'react';
+import { useDispatch, useSelector } from 'react-redux';
 import CardComponent from '../components/CardComponent';
 import ClockComponent from '../components/ClockComponent';
+import getCandidates from '../redux/action/candidate/getCandidates';
 
 function Voting() {
+  const candidateState = useSelector((state) => state.candidate);
+  const render = React.useRef(true);
+
+  const dispatch = useDispatch();
+
+  React.useEffect(() => {
+    if (render.current) {
+      if (!candidateState.data) {
+        dispatch(getCandidates());
+      }
+    }
+    return () => {
+      render.current = false;
+    };
+  }, [dispatch, candidateState]);
   return (
     <div>
       <div className="my-2">
@@ -14,9 +31,19 @@ function Voting() {
         </div>
       </div>
       <div className="grid grid-cols-1 sm:grid-cols-2 xl:grid-cols-4 gap-8">
-        {[1, 2, 3, 4].map((item) => {
-          return <CardComponent key={item} buttonText={'pilih'} />;
-        })}
+        {candidateState.data &&
+          candidateState.data.map((candidate, index) => {
+            return (
+              <CardComponent
+                buttonText={'Vote'}
+                name={candidate.name}
+                occupation={candidate.occupation}
+                periode={candidate.periode}
+                image={candidate.image}
+                key={index}
+              />
+            );
+          })}
       </div>
     </div>
   );
