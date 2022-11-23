@@ -15,6 +15,7 @@ function Homepage() {
   });
   const dispatch = useDispatch();
   const userState = useSelector((state) => state.user);
+  const candidateState = useSelector((state) => state.candidate);
   const currentUser = userState.data;
 
   const [errorMessage, setErrorMessage] = React.useState('');
@@ -58,10 +59,24 @@ function Homepage() {
   }, [errorMessage]);
 
   React.useEffect(() => {
-    dispatch(getCandidates());
-  }, [dispatch]);
+    if (!candidateState.data) {
+      dispatch(getCandidates());
+    }
+  }, [dispatch, candidateState]);
 
   const [modalVision, setModalVision] = React.useState(false);
+
+  const [profileCandidate, setProfile] = React.useState('');
+
+  const profileClick = (e, id) => {
+    e.preventDefault();
+    setModalVision(!modalVision);
+
+    const { profile } = candidateState.data.filter(
+      (candidate) => candidate.id === id
+    );
+    setProfile(profile);
+  };
 
   return (
     <div>
@@ -90,37 +105,54 @@ function Homepage() {
           />
         </div>
       </div>
-
-      <section className="mb-32 md:mb-36">
-        <div className="py-8">
-          <h5 className="text-blue-800 font-bold text-xl">Calon Kandidat</h5>
+      {candidateState.data && candidateState.data.length < 1 && (
+        <div className="flex flex-col space-y-4 my-12 items-center">
+          <img
+            src={`${BASE_URL}assets/image/undraw_team_up_re_84ok.svg`}
+            alt="circle loading"
+            className="w-80 h-80 object-contain"
+          />
+          <span className="text-sm capitalize">belum ada kandidat</span>
         </div>
-
-        <div className="grid grid-cols-1 sm:grid-cols-2 xl:grid-cols-4 gap-8">
-          {[1, 2, 3, 4].map((item) => {
-            return (
-              <CardComponent
-                key={item}
-                buttonText={'Profile'}
-                buttonClick={() => setModalVision(true)}
-              />
-            );
-          })}
-        </div>
-        <ModalComponent header active={modalVision} setActive={setModalVision}>
-          <div className="py-2 flex flex-col space-y-2">
-            <span className="text-md text-blue-600 font-bold uppercase">
-              Visi
-            </span>
-            <p className="text-sm text-gray-500 text-justify">
-              Lorem ipsum dolor sit amet, consectetur adipisicing elit. Animi
-              earum dignissimos reiciendis, provident, officiis minima hic
-              placeat minus excepturi est sed quisquam ea beatae eveniet
-              voluptatem, aperiam repellat sint culpa.
-            </p>
+      )}
+      {candidateState.data && candidateState.data.length > 0 && (
+        <section className="mb-32 md:mb-36">
+          <div className="py-8">
+            <h5 className="text-blue-800 font-bold text-xl">Calon Kandidat</h5>
           </div>
-        </ModalComponent>
-      </section>
+
+          <div className="grid grid-cols-1 sm:grid-cols-2 xl:grid-cols-4 gap-8">
+            {candidateState.data.map((candidate, index) => {
+              return (
+                <div key={index}>
+                  <CardComponent
+                    buttonText={'Profile'}
+                    buttonClick={() => setModalVision(true)}
+                    name={candidate.name}
+                    occupation={candidate.occupation}
+                    periode={candidate.periode}
+                    image={candidate.image}
+                  />
+                  <ModalComponent
+                    header
+                    active={modalVision}
+                    setActive={(e) => profileClick(e, candidate.id)}
+                  >
+                    <div className="py-2 flex flex-col space-y-2">
+                      <span className="text-md text-blue-600 font-bold uppercase">
+                        Profile
+                      </span>
+                      <p className="text-sm text-gray-500 text-justify">
+                        {profileCandidate}
+                      </p>
+                    </div>
+                  </ModalComponent>
+                </div>
+              );
+            })}
+          </div>
+        </section>
+      )}
 
       <section className="my-16 lg:my-0">
         <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
@@ -143,7 +175,6 @@ function Homepage() {
                 </p>
                 <div className="flex flex-col space-y-4">
                   <div>
-                    {' '}
                     <Link
                       to={`/voting?current_user=${currentUser}`}
                       className="px-6 rounded-md py-1 bg-blue-800 text-white hover:bg-blue-600"

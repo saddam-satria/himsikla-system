@@ -2,11 +2,13 @@ import React, { useState, useMemo, useRef } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { useSearchParams } from 'react-router-dom';
 import getCandidates from '../redux/action/candidate/getCandidates';
+import postCandidate from '../redux/action/candidate/postCandidate';
 import getMemberByQuery from '../redux/action/member/getMemberByQuery';
 import getMembers from '../redux/action/member/getMembers';
 
 const Admin = () => {
   const memberState = useSelector((state) => state.member);
+  const candidateState = useSelector((state) => state.candidate);
   const [page, setPage] = useState(1);
   const [take, setTake] = useState(10);
   const [query, setQuery] = useState('');
@@ -63,29 +65,40 @@ const Admin = () => {
 
   React.useEffect(() => {
     if (render.current) {
-      dispatch(getCandidates());
+      if (!candidateState.data) {
+        dispatch(getCandidates());
+      }
     }
     return () => {
       render.current = false;
     };
-  }, [dispatch]);
+  }, [dispatch, candidateState]);
 
   const selectMemberToCandidate = (e, data) => {
     e.preventDefault();
     const { email, gender, member } = data;
-    const { nim, occupation, address, periode, phoneNumber } = member;
+    const { nim, occupation, address, periode, phoneNumber, image, name } =
+      member;
+    const date = new Date(Date.now());
     const payload = {
       email,
+      name,
       nim,
+      image,
       occupation,
       address,
       periode,
       phone: phoneNumber,
       gender,
       likes: 0,
+      profile: '',
+      createdAt: `${date.getDate()}-${
+        date.getMonth() + 1
+      }-${date.getFullYear()} ${date.getHours()}:${date.getMinutes()}:${date.getSeconds()}`,
+      updatedAt: null,
     };
 
-    console.log(payload);
+    dispatch(postCandidate(payload));
   };
 
   return (
@@ -165,12 +178,19 @@ const Admin = () => {
                     <td className="py-4 px-6 lowercase"> {user.email}</td>
                     <td className="py-4 px-6"> {user.member.nim}</td>
                     <td className="py-4 px-6">
-                      <button
-                        onClick={(e) => selectMemberToCandidate(e, user)}
-                        className="px-6 rounded-md py-1 text-sm bg-blue-800 text-white hover:bg-blue-600 capitalize"
-                      >
-                        kandidat
-                      </button>
+                      {candidateState.data &&
+                      candidateState.data.filter(
+                        (item) => item.email === user.email
+                      ).length < 1 ? (
+                        <button
+                          onClick={(e) => selectMemberToCandidate(e, user)}
+                          className="px-6 rounded-md py-1 text-sm bg-blue-800 text-white hover:bg-blue-600 capitalize"
+                        >
+                          kandidat
+                        </button>
+                      ) : (
+                        'terdaftar sebagai kandidat'
+                      )}
                     </td>
                   </tr>
                 );

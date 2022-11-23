@@ -6,6 +6,7 @@ import Authorization from '../middlewares/authorization';
 import GetUser from '../middlewares/getUser';
 import SetToken from '../middlewares/setToken';
 import Admin from '../pages/admin';
+import Candidates from '../pages/admin/candidates';
 import Homepage from '../pages/homepage';
 import Profile from '../pages/profile';
 import Voting from '../pages/voting';
@@ -58,6 +59,16 @@ export function Routing() {
               <GetUser>
                 <Authorization>
                   <Admin />
+                </Authorization>
+              </GetUser>
+            }
+          />
+          <Route
+            path="/admin/candidates"
+            element={
+              <GetUser>
+                <Authorization>
+                  <Candidates />
                 </Authorization>
               </GetUser>
             }

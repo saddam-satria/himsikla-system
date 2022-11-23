@@ -4,7 +4,7 @@ const ModalComponent = ({ children, header, active, setActive }) => {
   return (
     active && (
       <div
-        onClick={() => setActive(false)}
+        onClick={setActive}
         className="fixed top-0 h-screen z-20 left-0 w-screen bg-gray-800 bg-opacity-50"
       >
         <div className="flex items-center h-full justify-center">
@@ -13,7 +13,7 @@ const ModalComponent = ({ children, header, active, setActive }) => {
               <div className="flex px-4">
                 <div className="ml-auto">
                   <span
-                    onClick={() => setActive(false)}
+                    onClick={setActive}
                     className="font-bold text-lg uppercase text-red-700 cursor-pointer"
                   >
                     x

@@ -97,7 +97,7 @@ const NavbarComponent = () => {
 
               {router.pathname.includes('admin') && (
                 <Link
-                  to={'/'}
+                  to={`/admin/candidates?current_user=${currentUser}`}
                   className={`
                 } text-white text-sm  capitalize transition-transform ease-in-out delay-150 duration-500 sm:translate-x-0 sm:transition-none`}
                 >

@@ -1,7 +1,14 @@
 import React from 'react';
 import { BASE_URL } from '../config/constant';
 
-const CardComponent = ({ image, buttonClick, buttonText }) => {
+const CardComponent = ({
+  image,
+  buttonClick,
+  buttonText,
+  name,
+  periode,
+  occupation,
+}) => {
   return (
     <div className="rounded shadow-lg">
       <div className="h-56">
@@ -25,9 +32,13 @@ const CardComponent = ({ image, buttonClick, buttonText }) => {
           />
         </div>
         <div className="p-4 text-center flex flex-col mb-4">
-          <h5 className="text-lg font-bold text-blue-800">Nama Kandidat</h5>
-          <span className="text-md text-gray-400">Periode</span>
-          <span className="text-md text-gray-400">Jabatan</span>
+          <h5 className="text-lg font-bold text-blue-800 capitalize">
+            {name ?? 'John Doe'}
+          </h5>
+          <span className="text-md text-gray-400">
+            {periode ?? '2021-2022'}
+          </span>
+          <span className="text-md text-gray-400">{occupation ?? 'ketua'}</span>
         </div>
         <div className="flex justify-center py-4">
           <button
