@@ -24,7 +24,7 @@ const getVoter = (name) => (dispatch) => {
     
             dispatch({
               type: GET_VOTER,
-              data,
+              data: data[0],
             });
           },
           error(error) {

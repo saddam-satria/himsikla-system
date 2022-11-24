@@ -1,6 +1,7 @@
 import React from 'react';
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import NavbarComponent from '../components/NavbarComponent';
+import VoterHook from '../hooks/voter';
 import Authentication from '../middlewares/authentication';
 import Authorization from '../middlewares/authorization';
 import GetUser from '../middlewares/getUser';
@@ -31,6 +32,7 @@ export function Routing() {
             element={
               <GetUser>
                 <Authentication>
+                  <VoterHook/>
                   <Voting />
                 </Authentication>
               </GetUser>

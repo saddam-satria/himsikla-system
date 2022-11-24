@@ -1,5 +1,6 @@
 import React, { useRef } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
+import deleteVoter from '../../redux/action/voter/deleteVoter';
 import getVoters from '../../redux/action/voter/getVoters';
 
 const Voter = () => {
@@ -19,6 +20,15 @@ const Voter = () => {
       render.current = false;
     };
   }, [dispatch, voterState]);
+
+
+  const deleteVoterHandler = (e,voterID) => {
+    e.preventDefault()
+
+
+    dispatch(deleteVoter(voterID))
+  }
+
 
 
 
@@ -49,6 +59,9 @@ const Voter = () => {
               <th scope="col" className="py-3 px-6">
                 Nama Kandidat
               </th>
+              <th scope="col" className="py-3 px-6">
+                Action
+              </th>
             </tr>
           </thead>
           <tbody>
@@ -65,6 +78,14 @@ const Voter = () => {
                    
                     <td className="py-4 px-6 lowercase"> {voter.token}</td>
                     <td className="py-4 px-6"> {voter.candidate}</td>
+                    <td className="py-4 px-6">
+                      <button
+                        onClick={(e) => deleteVoterHandler(e, voter.id)}
+                        className="px-6 rounded-md py-1 text-sm bg-red-800 text-white hover:bg-red-600 capitalize"
+                      >
+                        delete
+                      </button>
+                    </td>
                   </tr>
                 );
               })}

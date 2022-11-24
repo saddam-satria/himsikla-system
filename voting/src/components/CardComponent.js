@@ -5,6 +5,7 @@ const CardComponent = ({
   image,
   buttonClick,
   buttonText,
+  buttonHidden,
   name,
   periode,
   occupation,
@@ -41,12 +42,14 @@ const CardComponent = ({
           <span className="text-md text-gray-400">{occupation ?? 'ketua'}</span>
         </div>
         <div className="flex justify-center py-4">
-          <button
-            onClick={buttonClick}
-            className="px-6 rounded-md py-1 bg-blue-800 text-white hover:bg-blue-600"
-          >
-            {buttonText}
-          </button>
+            {
+              !buttonHidden &&  <button
+              onClick={buttonClick}
+              className="px-6 rounded-md py-1 bg-blue-800 text-white hover:bg-blue-600"
+            >
+              {buttonText}
+            </button>
+            }
         </div>
       </div>
     </div>
