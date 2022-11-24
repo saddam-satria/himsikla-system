@@ -11,6 +11,8 @@ const Authorization = ({ children }) => {
   const currentUser = searchParams.get('current_user');
 
   const memberState = useSelector((state) => state.member);
+  // const userState = useSelector((state) => state.user);
+
 
   React.useEffect(() => {
     if (render) {
@@ -26,6 +28,7 @@ const Authorization = ({ children }) => {
     if (render) {
       if (memberState.error && memberState.message.includes('not admin'))
         return navigate('/');
+
     }
 
     return () => {

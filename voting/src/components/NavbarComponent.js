@@ -105,6 +105,7 @@ const NavbarComponent = () => {
                     daftar kandidat
                   </Link>
                 ) : (
+                 <>
                   <Link
                     to={`/admin?current_user=${currentUser}`}
                     className={`
@@ -112,6 +113,14 @@ const NavbarComponent = () => {
                   >
                     daftar anggota
                   </Link>
+                  <Link
+                    to={`/admin/voter?current_user=${currentUser}`}
+                    className={`
+              } text-white text-sm  capitalize transition-transform ease-in-out delay-150 duration-500 sm:translate-x-0 sm:transition-none`}
+                  >
+                    daftar pemilih
+                  </Link>
+                 </>
                 ))}
 
               {router.pathname.includes('admin') ||
