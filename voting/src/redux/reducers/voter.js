@@ -1,10 +1,11 @@
-import { GET_VOTERS, VOTER_ERROR, VOTER_LOADING } from '../types';
+import { GET_VOTER, GET_VOTERS, VOTER_ERROR, VOTER_LOADING } from '../types';
 
 const initalState = {
   data: null,
   error: false,
   message: null,
   loading: false,
+  voter: null
 };
 
 const voter = (state = initalState, action) => {
@@ -13,6 +14,16 @@ const voter = (state = initalState, action) => {
       return {
         ...state,
         data: action.data,
+        loading: false,
+        error: false,
+        message: null,
+        totalData: action.totalData,
+      };
+
+    case GET_VOTER:
+      return {
+        ...state,
+        voter: action.data,
         loading: false,
         error: false,
         message: null,

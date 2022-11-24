@@ -18,3 +18,4 @@ export const CANDIDATE_LOADING = 'CANDIDATE_LOADING';
 export const VOTER_ERROR = 'VOTER_ERROR';
 export const VOTER_LOADING = 'VOTER_LOADING';
 export const GET_VOTERS = 'GET_VOTERS';
+export const GET_VOTER = 'GET_VOTER';

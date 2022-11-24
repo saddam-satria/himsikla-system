@@ -160,6 +160,9 @@ const Admin = () => {
                 NIM Anggota
               </th>
               <th scope="col" className="py-3 px-6">
+                Token Anggota
+              </th>
+              <th scope="col" className="py-3 px-6">
                 Action
               </th>
             </tr>
@@ -177,6 +180,7 @@ const Admin = () => {
                     </th>
                     <td className="py-4 px-6 lowercase"> {user.email}</td>
                     <td className="py-4 px-6"> {user.member.nim}</td>
+                    <td className="py-4 px-6"> {user.member.token}</td>
                     <td className="py-4 px-6">
                       {candidateState.data &&
                       candidateState.data.filter(
