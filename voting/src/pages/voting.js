@@ -5,7 +5,6 @@ import ClockComponent from '../components/ClockComponent';
 import LoadingComponent from '../components/LoadingComponent';
 import { BASE_URL } from '../config/constant';
 import getCandidates from '../redux/action/candidate/getCandidates';
-import getVoter from '../redux/action/voter/getVoter';
 import getVoters from '../redux/action/voter/getVoters';
 import postVoter from '../redux/action/voter/postVoter';
 
@@ -52,7 +51,9 @@ function Voting() {
     e.preventDefault();
     const date = new Date(Date.now());
     const currentUser = userState.data;
-    dispatch(getVoter(currentUser.member.name));
+
+
+    if(currentUser.role_id === "99") return;
 
     const payload = {
       candidate,

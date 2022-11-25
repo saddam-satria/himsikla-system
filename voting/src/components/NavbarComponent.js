@@ -26,10 +26,6 @@ const NavbarComponent = () => {
       display: 'home',
       to: '/',
     },
-    {
-      display: 'profile',
-      to: `/profile?current_user=${currentUser}`,
-    },
   ];
 
   const router = useLocation();
@@ -84,10 +80,6 @@ const NavbarComponent = () => {
                     key={index}
                     className={`${
                       isNavbarActive ? 'translate-x-0' : '-translate-x-full'
-                    } ${
-                      !router.pathname.includes('voting') &&
-                      menu.display.includes('profile') &&
-                      'hidden'
                     } text-white text-sm  capitalize transition-transform ease-in-out delay-150 duration-500 sm:translate-x-0 sm:transition-none`}
                   >
                     <Link to={menu.to}>{menu.display}</Link>
@@ -105,23 +97,33 @@ const NavbarComponent = () => {
                     daftar kandidat
                   </Link>
                 ) : (
-                 <>
-                  <Link
-                    to={`/admin?current_user=${currentUser}`}
-                    className={`
+                  <>
+                    <Link
+                      to={`/admin?current_user=${currentUser}`}
+                      className={`
               } text-white text-sm  capitalize transition-transform ease-in-out delay-150 duration-500 sm:translate-x-0 sm:transition-none`}
-                  >
-                    daftar anggota
-                  </Link>
-                  <Link
-                    to={`/admin/voter?current_user=${currentUser}`}
-                    className={`
+                    >
+                      daftar anggota
+                    </Link>
+                    <Link
+                      to={`/admin/voter?current_user=${currentUser}`}
+                      className={`
               } text-white text-sm  capitalize transition-transform ease-in-out delay-150 duration-500 sm:translate-x-0 sm:transition-none`}
-                  >
-                    daftar pemilih
-                  </Link>
-                 </>
+                    >
+                      daftar pemilih
+                    </Link>
+                  </>
                 ))}
+
+              {router.pathname.includes('voting') || (stateUser.data && stateUser.data.role_id !== "99") && (
+                <Link
+                  to={`/profile?current_user=${currentUser}`}
+                  className={`
+                  } text-white text-sm  capitalize transition-transform ease-in-out delay-150 duration-500 sm:translate-x-0 sm:transition-none`}
+                >
+                  Profile
+                </Link>
+              )}
 
               {router.pathname.includes('admin') ||
               (!stateUser.error && stateUser.data) ? (

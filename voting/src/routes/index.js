@@ -32,7 +32,7 @@ export function Routing() {
             element={
               <GetUser>
                 <Authentication>
-                  <VoterHook/>
+                  <VoterHook />
                   <Voting />
                 </Authentication>
               </GetUser>
@@ -76,7 +76,7 @@ export function Routing() {
               </GetUser>
             }
           />
-           <Route
+          <Route
             path="/admin/voter"
             element={
               <GetUser>
