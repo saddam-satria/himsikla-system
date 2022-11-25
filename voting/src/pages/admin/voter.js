@@ -1,5 +1,7 @@
 import React, { useRef } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
+import BarChartComponent from '../../components/BarchartComponent';
+import LoadingComponent from '../../components/LoadingComponent';
 import deleteVoter from '../../redux/action/voter/deleteVoter';
 import getVoters from '../../redux/action/voter/getVoters';
 
@@ -21,30 +23,43 @@ const Voter = () => {
     };
   }, [dispatch, voterState]);
 
+  const deleteVoterHandler = (e, voterID) => {
+    e.preventDefault();
 
-  const deleteVoterHandler = (e,voterID) => {
-    e.preventDefault()
+    dispatch(deleteVoter(voterID));
+  };
 
+  const [candidateNames, count] = React.useMemo(() => {
+    const candidates = {};
+    if (voterState.data) {
+      voterState.data
+        .map((voter) => {
+          candidates[voter.candidate] = 0;
+          return voter;
+        })
+        .reduce((_acc, item) => {
+          candidates[item.candidate] += 1;
+        }, 0);
+    }
+    return [Object.keys(candidates), candidates];
+  }, [voterState]);
 
-    dispatch(deleteVoter(voterID))
-  }
-
-
-
+  const [labels, dataset] = React.useMemo(() => {
+    return [
+      candidateNames.map((name) => name),
+      candidateNames.map((name) => count[name]),
+    ];
+  }, [candidateNames, count]);
 
   return (
     <div>
+      <div
+        className="my-8 grid grid-cols-1 lg:grid-cols-2 gap-4"
+      >
+        <BarChartComponent labels={labels} rawData={dataset} />
+      </div>
       {voterState.loading && (
-        <div className="fixed left-0 top-0 z-10 h-screen w-screen">
-          <div className="flex flex-col space-y-2 justify-center h-full w-full items-center">
-            <img
-              src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRL2tq0IANwwvpD-dJ-YD8Zbe0Xeriw2h-mdw&usqp=CAU"
-              alt="circle loading"
-              className="w-36 h-36 object-contain"
-            />
-            <span className="text-sm capitalize">tunggu sebentar</span>
-          </div>
-        </div>
+        <LoadingComponent />
       )}
       <div className="overflow-x-auto relative">
         <table className="w-full text-sm text-left text-gray-500 ">
@@ -75,7 +90,7 @@ const Voter = () => {
                     >
                       {voter.name}
                     </th>
-                   
+
                     <td className="py-4 px-6 lowercase"> {voter.token}</td>
                     <td className="py-4 px-6"> {voter.candidate}</td>
                     <td className="py-4 px-6">
@@ -97,7 +112,6 @@ const Voter = () => {
           </div>
         )}
       </div>
-      
     </div>
   );
 };
