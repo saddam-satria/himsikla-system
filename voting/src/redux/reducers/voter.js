@@ -33,7 +33,6 @@ const voter = (state = initalState, action) => {
     case VOTER_ERROR:
       return {
         ...state,
-        data: null,
         loading: false,
         error: true,
         message: action.message,

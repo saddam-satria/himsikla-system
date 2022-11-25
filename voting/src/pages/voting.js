@@ -4,6 +4,7 @@ import CardComponent from '../components/CardComponent';
 import ClockComponent from '../components/ClockComponent';
 import getCandidates from '../redux/action/candidate/getCandidates';
 import getVoter from '../redux/action/voter/getVoter';
+import getVoters from '../redux/action/voter/getVoters';
 import postVoter from '../redux/action/voter/postVoter';
 
 
@@ -12,10 +13,7 @@ function Voting() {
   const userState = useSelector((state) => state.user);
   const voterState = useSelector((state) => state.voter);
 
-  const [errorVoting, setErrorVoting] = React.useState({
-    error: false,
-    message: ''
-  })
+ 
   const [currentVoter,setCurrentVoter] = React.useState(null);
 
 
@@ -40,6 +38,17 @@ function Voting() {
       render.current = false;
     };
   }, [dispatch, candidateState]);
+
+  React.useEffect(() => {
+    if (render.current) {
+      if (!voterState.data) {
+        dispatch(getVoters());
+      }
+    }
+    return () => {
+      render.current = false;
+    };
+  }, [dispatch, voterState]);
 
 
 
@@ -66,33 +75,26 @@ function Voting() {
       updatedAt: null,
     }
 
-    if(currentVoter.name === currentUser.member.name){
-      setErrorVoting({
-        error :true,
-        message: "Hanya Boleh Sekali"
-      })
-      return;
-    }
-    
 
     dispatch(postVoter(payload));
   }
 
-
-
-
+  const voterGroupByCandidate = React.useMemo(() => {
+    const candidates = {};
+    if(voterState.data){
+      voterState.data.map((voter) => {
+        candidates[voter.candidate] = 0;
+        return voter;
+      }).reduce((acc,item) =>{
+        candidates[item.candidate] += 1
+      },0 )
+    } 
+    return candidates
+  } ,[voterState])
 
   return (
     <div>
-      <div className="my-2">
-        <ClockComponent />
-        <div className="py-2">
-          <span className="text-lg font-bold text-blue-800">
-            Total Suara Masuk : 0
-          </span>
-        </div>
-      </div>
-      {candidateState.loading || voterState.loading && (
+       {candidateState.loading || voterState.loading && (
         <div className="fixed left-0 top-0 z-10 h-screen w-screen">
           <div className="flex flex-col space-y-2 justify-center h-full w-full items-center">
             <img
@@ -105,22 +107,47 @@ function Voting() {
         </div>
       )}
       {
-        userState.data && currentVoter && userState.data.member.name !== currentVoter.name &&
-        <div className="grid grid-cols-1 sm:grid-cols-2 xl:grid-cols-4 gap-8">
-        {candidateState.data &&
-          candidateState.data.map((candidate, index) => {
-            return (
-              <CardComponent
-                buttonText={'Vote'}
-                name={candidate.name}
-                occupation={candidate.occupation}
-                periode={candidate.periode}
-                image={candidate.image}
-                key={index}
-                buttonClick={(e) => voteHandler(e, candidate.name)}
-              />
-            );
-          })}
+        !candidateState.loading && !voterState.loading && !userState.loading && 
+        <div>
+           <div className="my-2">
+            <ClockComponent />
+            <div className="py-2">
+              <span className="text-lg font-bold text-blue-800">
+                Total Suara Masuk : {voterState.data && voterState.data.length }
+              </span>
+            </div>
+          </div>
+
+          {
+            voterState.error && voterState.message.includes("voter not found") || !currentVoter ?  <div className="grid grid-cols-1 sm:grid-cols-2 xl:grid-cols-4 gap-8">
+            {candidateState.data && candidateState.data.map((candidate, index) => {
+                return (
+                  <CardComponent
+                    buttonText={'Vote'}
+                    name={candidate.name}
+                    occupation={candidate.occupation}
+                    periode={candidate.periode}
+                    image={candidate.image}
+                    key={index}
+                    buttonClick={(e) => voteHandler(e, candidate.name)}
+                  />
+                );
+              })}
+            </div> 
+            :
+              <div className='my-4'> 
+                  <div className='text-center'>
+                    <span className='text-md text-red-600 font-bold'>
+                      Anda Sudah Memilih  
+                    </span>
+                  </div>  
+                  <div className="grid grid-cols-1 sm:grid-cols-2 xl:grid-cols-4 gap-8">
+                  </div>              
+              </div>
+          }
+        
+         
+        
         </div>
       }
     </div>

@@ -16,16 +16,26 @@ const getVoter = (name) => (dispatch) => {
     
         onSnapshot(voterRef, {
           next(snap) {
+          try {
             const data = [];
     
             snap.docs.map((doc) => {
               data.push({ ...doc.data(), id: doc.id });
             });
+
+
+            if(data.length < 1) throw new Error('voter not found')
     
             dispatch({
               type: GET_VOTER,
               data: data[0],
             });
+          } catch (error) {
+            dispatch({
+              type: VOTER_ERROR,
+              message: error.message
+            })
+          }
           },
           error(error) {
             dispatch({

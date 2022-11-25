@@ -4,13 +4,12 @@ import getVoter from "../redux/action/voter/getVoter";
 
 
 const VoterHook = () => {
-    const userState = useSelector((state) => state.user);
-
-    const dispatch = useDispatch()
+  const userState = useSelector((state) => state.user);
+  const dispatch = useDispatch();
 
   React.useEffect(() => {
-   
-      if (userState.data) {
+      
+    if (userState.data && userState.data.member) {
         dispatch(getVoter(userState.data.member.name))
       }
     
