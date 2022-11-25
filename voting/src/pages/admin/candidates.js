@@ -1,5 +1,6 @@
 import React, { useRef } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
+import LoadingComponent from '../../components/LoadingComponent';
 import deleteCandidate from '../../redux/action/candidate/deleteCandidate';
 import getCandidates from '../../redux/action/candidate/getCandidates';
 import updateProfile from '../../redux/action/candidate/updateProfile';
@@ -56,16 +57,7 @@ const Candidates = () => {
   return (
     <div>
       {candidateState.loading && (
-        <div className="fixed left-0 top-0 z-10 h-screen w-screen">
-          <div className="flex flex-col space-y-2 justify-center h-full w-full items-center">
-            <img
-              src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRL2tq0IANwwvpD-dJ-YD8Zbe0Xeriw2h-mdw&usqp=CAU"
-              alt="circle loading"
-              className="w-36 h-36 object-contain"
-            />
-            <span className="text-sm capitalize">tunggu sebentar</span>
-          </div>
-        </div>
+       <LoadingComponent />
       )}
       <div className="overflow-x-auto relative">
         <table className="w-full text-sm text-left text-gray-500 ">
