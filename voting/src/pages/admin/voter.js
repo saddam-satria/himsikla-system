@@ -53,14 +53,10 @@ const Voter = () => {
 
   return (
     <div>
-      <div
-        className="my-8 grid grid-cols-1 lg:grid-cols-2 gap-4"
-      >
+      <div className="my-8 grid grid-cols-1 lg:grid-cols-2 gap-4">
         <BarChartComponent labels={labels} rawData={dataset} />
       </div>
-      {voterState.loading && (
-        <LoadingComponent />
-      )}
+      {voterState.loading && <LoadingComponent />}
       <div className="overflow-x-auto relative">
         <table className="w-full text-sm text-left text-gray-500 ">
           <thead className="text-xs uppercase bg-blue-800 text-white ">
