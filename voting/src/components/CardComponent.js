@@ -26,7 +26,7 @@ const CardComponent = ({
           <img
             src={`${
               image ??
-              'https://cdn0-production-images-kly.akamaized.net/e3RkQl8koPGNOhDvC6HNf14-XqI=/640x640/smart/filters:quality(75):strip_icc():format(jpeg)/kly-media-production/medias/4086985/original/021883000_1657675968-131934218_679092246308460_2005924033613967069_n.jpg'
+              'https://upload.wikimedia.org/wikipedia/commons/thumb/a/ac/No_image_available.svg/1200px-No_image_available.svg.png'
             }`}
             alt="profile"
             className="w-28 h-w-28 object-contain rounded-full border-4 border-white"
