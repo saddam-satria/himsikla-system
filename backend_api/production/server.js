@@ -24,7 +24,7 @@ const prisma_1 = __importDefault(require("./app/config/prisma"));
     dotenv_1.default.config();
     const app = (0, express_1.default)();
     app.use((0, cors_1.default)({
-        origin: 'http://localhost:3000',
+        origin: ['https://pemilu.himsikaliabang.com', 'http://pemilu.himsikaliabang.com'],
     }));
     app.use(express_1.default.json());
     app.use(express_1.default.urlencoded({ extended: true }));
