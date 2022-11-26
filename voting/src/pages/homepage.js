@@ -16,7 +16,7 @@ function Homepage() {
   const dispatch = useDispatch();
   const userState = useSelector((state) => state.user);
   const candidateState = useSelector((state) => state.candidate);
-  const currentUser = userState.data;
+  const currentUser = userState.token;
 
   const [errorMessage, setErrorMessage] = React.useState('');
 
@@ -177,26 +177,23 @@ function Homepage() {
                   setiap account hanya bisa di gunakan sekali saja
                 </p>
                 <div className="flex flex-col space-y-4">
-                  {userState.data && userState.data.role_id !== '99' && (
-                    <div>
-                      <Link
-                        to={`/voting?current_user=${currentUser}`}
-                        className="px-6 rounded-md py-1 bg-blue-800 text-white hover:bg-blue-600"
-                      >
-                        ke halaman pemilu
-                      </Link>
-                    </div>
-                  )}
-                  {userState.data && userState.data.role_id === '99' && (
-                    <div>
-                      <Link
-                        to={`/admin?current_user=${currentUser}`}
-                        className="px-6 rounded-md py-1 bg-blue-800 text-white hover:bg-blue-600"
-                      >
-                        ke halaman admin
-                      </Link>
-                    </div>
-                  )}
+                  <div>
+                    <Link
+                      to={`/voting?current_user=${currentUser}`}
+                      className="px-6 rounded-md py-1 bg-blue-800 text-white hover:bg-blue-600"
+                    >
+                      ke halaman pemilu
+                    </Link>
+                  </div>
+
+                  <div>
+                    <Link
+                      to={`/admin?current_user=${currentUser}`}
+                      className="px-6 rounded-md py-1 bg-blue-800 text-white hover:bg-blue-600"
+                    >
+                      ke halaman admin
+                    </Link>
+                  </div>
                 </div>
               </div>
             )}

@@ -4,16 +4,14 @@ import {
   Link,
   useLocation,
   useNavigate,
-  useSearchParams,
 } from 'react-router-dom';
 import { BASE_URL } from '../config/constant';
 
 const NavbarComponent = () => {
   const [isNavbarActive, setIsNavbarActive] = React.useState(false);
-  const [searchParams] = useSearchParams();
 
   const stateUser = useSelector((state) => state.user);
-  const currentUser = searchParams.get('current_user');
+  // const currentUser = searchParams.get('current_user');
 
   const navbarAction = (e) => {
     e.preventDefault();
@@ -90,7 +88,7 @@ const NavbarComponent = () => {
               {router.pathname.includes('admin') &&
                 (!router.pathname.includes('candidates') ? (
                   <Link
-                    to={`/admin/candidates?current_user=${currentUser}`}
+                    to={`/admin/candidates?current_user=${stateUser.token}`}
                     className={`
               } text-white text-sm  capitalize transition-transform ease-in-out delay-150 duration-500 sm:translate-x-0 sm:transition-none`}
                   >
@@ -99,14 +97,14 @@ const NavbarComponent = () => {
                 ) : (
                   <>
                     <Link
-                      to={`/admin?current_user=${currentUser}`}
+                      to={`/admin?current_user=${stateUser.token}`}
                       className={`
               } text-white text-sm  capitalize transition-transform ease-in-out delay-150 duration-500 sm:translate-x-0 sm:transition-none`}
                     >
                       daftar anggota
                     </Link>
                     <Link
-                      to={`/admin/voter?current_user=${currentUser}`}
+                      to={`/admin/voter?current_user=${stateUser.token}`}
                       className={`
               } text-white text-sm  capitalize transition-transform ease-in-out delay-150 duration-500 sm:translate-x-0 sm:transition-none`}
                     >
@@ -117,7 +115,7 @@ const NavbarComponent = () => {
 
               {router.pathname.includes('voting') || (stateUser.data && stateUser.data.role_id !== "99") && (
                 <Link
-                  to={`/profile?current_user=${currentUser}`}
+                  to={`/profile?current_user=${stateUser.token}`}
                   className={`
                   } text-white text-sm  capitalize transition-transform ease-in-out delay-150 duration-500 sm:translate-x-0 sm:transition-none`}
                 >

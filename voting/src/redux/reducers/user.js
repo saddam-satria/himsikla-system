@@ -11,6 +11,7 @@ const initalState = {
   error: false,
   message: null,
   loading: false,
+  token: null,
 };
 
 const user = (state = initalState, action) => {
@@ -34,7 +35,7 @@ const user = (state = initalState, action) => {
     case USER_SET_TOKEN:
       return {
         ...state,
-        data: action.data,
+        token: action.data,
         loading: false,
         error: false,
         message: null,
