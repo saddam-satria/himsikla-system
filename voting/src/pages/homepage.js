@@ -208,6 +208,11 @@ function Homepage() {
                     onChange={(e) => {
                       setPayload({ ...payload, email: e.target.value });
                     }}
+                    onKeyUp={(e) => {
+                      if (e.key === 'Enter') {
+                        startVoting(e);
+                      }
+                    }}
                   />
                   <input
                     type="password"
@@ -217,6 +222,11 @@ function Homepage() {
                       setPayload({ ...payload, token: e.target.value });
                     }}
                     value={payload.token}
+                    onKeyUp={(e) => {
+                      if (e.key === 'Enter') {
+                        startVoting(e);
+                      }
+                    }}
                   />
                   <div className="ml-auto">
                     <button

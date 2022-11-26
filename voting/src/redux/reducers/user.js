@@ -27,7 +27,7 @@ const user = (state = initalState, action) => {
     case USER_LOGIN:
       return {
         ...state,
-        data: action.data,
+        token: action.data,
         loading: false,
         error: false,
         message: null,

@@ -17,5 +17,5 @@ chromeExtension();
 
 export const store = createStore(
   reducers,
-  compose(applyMiddleware(thunk), chromeExtension())
+  compose(applyMiddleware(thunk))
 );

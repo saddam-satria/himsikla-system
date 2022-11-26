@@ -4,14 +4,15 @@ import {
   Link,
   useLocation,
   useNavigate,
+  useSearchParams,
 } from 'react-router-dom';
 import { BASE_URL } from '../config/constant';
 
 const NavbarComponent = () => {
   const [isNavbarActive, setIsNavbarActive] = React.useState(false);
-
+  const [searchParams] = useSearchParams();
   const stateUser = useSelector((state) => state.user);
-  // const currentUser = searchParams.get('current_user');
+  const currentUser = searchParams.get('current_user');
 
   const navbarAction = (e) => {
     e.preventDefault();
@@ -113,18 +114,20 @@ const NavbarComponent = () => {
                   </>
                 ))}
 
-              {router.pathname.includes('voting') || (stateUser.data && stateUser.data.role_id !== "99") && (
-                <Link
-                  to={`/profile?current_user=${stateUser.token}`}
-                  className={`
+              {router.pathname.includes('voting') &&
+                stateUser.data &&
+                stateUser.data.role_id !== '99' &&
+                currentUser && (
+                  <Link
+                    to={`/profile?current_user=${currentUser}`}
+                    className={`
                   } text-white text-sm  capitalize transition-transform ease-in-out delay-150 duration-500 sm:translate-x-0 sm:transition-none`}
-                >
-                  Profile
-                </Link>
-              )}
+                  >
+                    Profile
+                  </Link>
+                )}
 
-              {router.pathname.includes('admin') ||
-              (!stateUser.error && stateUser.data) ? (
+              {stateUser.token && (
                 <span
                   onClick={logout}
                   className={`
@@ -132,8 +135,6 @@ const NavbarComponent = () => {
                 >
                   Logout
                 </span>
-              ) : (
-                ''
               )}
             </div>
           </div>
