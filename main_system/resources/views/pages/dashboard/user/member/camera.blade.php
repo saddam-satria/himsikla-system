@@ -23,7 +23,8 @@
         cameraId, 
         {
             fps: 10,    
-            qrbox: { width: 180, height: 180 } 
+            qrbox: { width: 180, height: 180 },
+            facingMode: { exact: "environment"}, 
         },
         (decodedText, decodedResult) => {
             infoMessage.innerText = "berhasil scan"
