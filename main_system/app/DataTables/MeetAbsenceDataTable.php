@@ -49,7 +49,7 @@ class MeetAbsenceDataTable extends DataTable
     protected function getColumns()
     {
         $columns = array(
-            Column::make("name")->orderable(false),
+            Column::make("name")->searchable(false)->orderable(false),
             Column::make("status")->searchable(false),
         );
 
