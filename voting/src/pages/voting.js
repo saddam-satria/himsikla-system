@@ -76,22 +76,7 @@ function Voting() {
 
     dispatch(postVoter(payload));
   };
-
-  const voterGroupByCandidate = React.useMemo(() => {
-    const candidates = {};
-    if (voterState.data) {
-      voterState.data
-        .map((voter) => {
-          candidates[voter.candidate] = 0;
-          return voter;
-        })
-        .reduce((_acc, item) => {
-          candidates[item.candidate] += 1;
-        }, 0);
-    }
-    return candidates;
-  }, [voterState]);
-
+  
   return (
     <div>
       {candidateState.loading || (voterState.loading && <LoadingComponent />)}
@@ -156,11 +141,6 @@ function Voting() {
                             <h5 className="text-lg font-bold text-blue-800 capitalize">
                               {candidate.name}
                             </h5>
-                            <div>
-                              <span className="text-md text-gray-400 py-1 px-3 border-2 shadow rounded-full border-blue-800">
-                                {voterGroupByCandidate[candidate.name] ?? 0}
-                              </span>
-                            </div>
                           </div>
                         </div>
                       </div>
