@@ -8,8 +8,8 @@
                 <th>NIM Anggota</th>
                 <th>Sakit</th>
                 <th>Izin</th>
-                <th>Tanpa Keterangan</th>
                 <th>Hadir</th>
+                <th>Tanpa Keterangan</th>
             </tr>
         </thead>
         <tbody>
@@ -19,8 +19,8 @@
                     <td>{{$member->nim}}</td>
                     <td>{{$member->sick}}</td>
                     <td>{{$member->permitted}}</td>
-                    <td>{{$member->absence}}</td>
                     <td>{{$member->present}}</td>
+                    <td>{{$member->absence}}</td>
                 </tr>
             @endforeach
         </tbody>
