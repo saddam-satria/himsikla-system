@@ -50,7 +50,7 @@ class AttendenceRecapMeetDataTable extends DataTable
     protected function getColumns()
     {
         return [
-            Column::make('name')->title("Nama Anggota")->orderable(false),
+            Column::make('name')->title("Nama Anggota")->orderable(false)->searchable(false),
             Column::make('present')->title("Jumlah Hadir")->orderable(false)->searchable(false),
             Column::make('sick')->title("Jumlah Sakit")->searchable(false)->orderable(false),
             Column::make('absence')->title("Jumlah Absen")->searchable(false)->orderable(false),
