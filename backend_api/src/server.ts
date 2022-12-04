@@ -12,9 +12,7 @@ import prisma from './app/config/prisma';
   const app = express();
 
   app.use(
-    cors({
-      origin: ['https://pemilu.himsikaliabang.com', 'http://pemilu.himsikaliabang.com', "http://localhost:3000"],
-    })
+    cors()
   );
   app.use(express.json());
   app.use(express.urlencoded({ extended: true }));
