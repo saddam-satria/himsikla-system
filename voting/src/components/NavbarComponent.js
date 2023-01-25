@@ -11,7 +11,6 @@ import { BASE_URL } from '../config/constant';
 const NavbarComponent = () => {
   const [isNavbarActive, setIsNavbarActive] = React.useState(false);
   const [searchParams] = useSearchParams();
-
   const stateUser = useSelector((state) => state.user);
   const currentUser = searchParams.get('current_user');
 
@@ -25,10 +24,6 @@ const NavbarComponent = () => {
     {
       display: 'home',
       to: '/',
-    },
-    {
-      display: 'profile',
-      to: `/profile?current_user=${currentUser}`,
     },
   ];
 
@@ -84,10 +79,6 @@ const NavbarComponent = () => {
                     key={index}
                     className={`${
                       isNavbarActive ? 'translate-x-0' : '-translate-x-full'
-                    } ${
-                      !router.pathname.includes('voting') &&
-                      menu.display.includes('profile') &&
-                      'hidden'
                     } text-white text-sm  capitalize transition-transform ease-in-out delay-150 duration-500 sm:translate-x-0 sm:transition-none`}
                   >
                     <Link to={menu.to}>{menu.display}</Link>
@@ -98,24 +89,45 @@ const NavbarComponent = () => {
               {router.pathname.includes('admin') &&
                 (!router.pathname.includes('candidates') ? (
                   <Link
-                    to={`/admin/candidates?current_user=${currentUser}`}
+                    to={`/admin/candidates?current_user=${stateUser.token}`}
                     className={`
               } text-white text-sm  capitalize transition-transform ease-in-out delay-150 duration-500 sm:translate-x-0 sm:transition-none`}
                   >
                     daftar kandidat
                   </Link>
                 ) : (
-                  <Link
-                    to={`/admin?current_user=${currentUser}`}
-                    className={`
+                  <>
+                    <Link
+                      to={`/admin?current_user=${stateUser.token}`}
+                      className={`
               } text-white text-sm  capitalize transition-transform ease-in-out delay-150 duration-500 sm:translate-x-0 sm:transition-none`}
-                  >
-                    daftar anggota
-                  </Link>
+                    >
+                      daftar anggota
+                    </Link>
+                    <Link
+                      to={`/admin/voter?current_user=${stateUser.token}`}
+                      className={`
+              } text-white text-sm  capitalize transition-transform ease-in-out delay-150 duration-500 sm:translate-x-0 sm:transition-none`}
+                    >
+                      daftar pemilih
+                    </Link>
+                  </>
                 ))}
 
-              {router.pathname.includes('admin') ||
-              (!stateUser.error && stateUser.data) ? (
+              {router.pathname.includes('voting') &&
+                stateUser.data &&
+                stateUser.data.role_id !== '99' &&
+                currentUser && (
+                  <Link
+                    to={`/profile?current_user=${currentUser}`}
+                    className={`
+                  } text-white text-sm  capitalize transition-transform ease-in-out delay-150 duration-500 sm:translate-x-0 sm:transition-none`}
+                  >
+                    Profile
+                  </Link>
+                )}
+
+              {stateUser.token && (
                 <span
                   onClick={logout}
                   className={`
@@ -123,8 +135,6 @@ const NavbarComponent = () => {
                 >
                   Logout
                 </span>
-              ) : (
-                ''
               )}
             </div>
           </div>

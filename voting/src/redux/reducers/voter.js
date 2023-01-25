@@ -1,54 +1,43 @@
-import {
-  GET_USER,
-  USER_ERROR,
-  USER_LOADING,
-  USER_LOGIN,
-  USER_SET_TOKEN,
-} from '../types';
+import { GET_VOTER, GET_VOTERS, VOTER_ERROR, VOTER_LOADING } from '../types';
 
 const initalState = {
   data: null,
   error: false,
   message: null,
   loading: false,
-  token: null,
+  voter: null
 };
 
-const user = (state = initalState, action) => {
+const voter = (state = initalState, action) => {
   switch (action.type) {
-    case GET_USER:
+    case GET_VOTERS:
       return {
         ...state,
         data: action.data,
         loading: false,
         error: false,
         message: null,
+        totalData: action.totalData,
       };
-    case USER_LOGIN:
+
+    case GET_VOTER:
       return {
         ...state,
-        token: action.data,
+        voter: action.data,
         loading: false,
         error: false,
         message: null,
+        totalData: action.totalData,
       };
-    case USER_SET_TOKEN:
+
+    case VOTER_ERROR:
       return {
         ...state,
-        token: action.data,
-        loading: false,
-        error: false,
-        message: null,
-      };
-    case USER_ERROR:
-      return {
-        ...state,
-        data: null,
         loading: false,
         error: true,
         message: action.message,
       };
-    case USER_LOADING:
+    case VOTER_LOADING:
       return {
         ...state,
         loading: true,
@@ -59,4 +48,4 @@ const user = (state = initalState, action) => {
   }
 };
 
-export default user;
+export default voter;

@@ -20,10 +20,11 @@
     const scanning = (cameraId) => {
         const html5QrCode = new Html5Qrcode("reader");
         html5QrCode.start(
-        cameraId, 
+        {facingMode: { exact: "environment"}},
         {
             fps: 10,    
-            qrbox: { width: 180, height: 180 } 
+            qrbox: { width: 180, height: 180 },
+            
         },
         (decodedText, decodedResult) => {
             infoMessage.innerText = "berhasil scan"

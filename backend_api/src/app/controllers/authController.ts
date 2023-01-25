@@ -74,11 +74,6 @@ class AuthController {
 
       const data = await this.userRepository.getUserByID(id as string);
 
-      if (data.role_id === BigInt(99)) {
-        payload.statusCode = 401;
-        throw new Error('User Not Found');
-      }
-
       const user = {
         ...data,
         member: {

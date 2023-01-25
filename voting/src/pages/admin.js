@@ -1,6 +1,7 @@
 import React, { useState, useMemo, useRef } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { useSearchParams } from 'react-router-dom';
+import LoadingComponent from '../components/LoadingComponent'
 import getCandidates from '../redux/action/candidate/getCandidates';
 import postCandidate from '../redux/action/candidate/postCandidate';
 import getMemberByQuery from '../redux/action/member/getMemberByQuery';
@@ -104,16 +105,7 @@ const Admin = () => {
   return (
     <div>
       {memberState.loading && (
-        <div className="fixed left-0 top-0 z-10 h-screen w-screen">
-          <div className="flex flex-col space-y-2 justify-center h-full w-full items-center">
-            <img
-              src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRL2tq0IANwwvpD-dJ-YD8Zbe0Xeriw2h-mdw&usqp=CAU"
-              alt="circle loading"
-              className="w-36 h-36 object-contain"
-            />
-            <span className="text-sm capitalize">tunggu sebentar</span>
-          </div>
-        </div>
+        <LoadingComponent/>
       )}
       <div className="mb-2">
         <div className="relative">
@@ -160,6 +152,9 @@ const Admin = () => {
                 NIM Anggota
               </th>
               <th scope="col" className="py-3 px-6">
+                Token Anggota
+              </th>
+              <th scope="col" className="py-3 px-6">
                 Action
               </th>
             </tr>
@@ -177,6 +172,7 @@ const Admin = () => {
                     </th>
                     <td className="py-4 px-6 lowercase"> {user.email}</td>
                     <td className="py-4 px-6"> {user.member.nim}</td>
+                    <td className="py-4 px-6"> {user.member.token}</td>
                     <td className="py-4 px-6">
                       {candidateState.data &&
                       candidateState.data.filter(

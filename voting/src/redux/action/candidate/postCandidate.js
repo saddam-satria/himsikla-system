@@ -4,7 +4,7 @@ import { CANDIDATE_ERROR } from '../../types';
 
 const postCandidate = (payload) => async (dispatch) => {
   try {
-    addDoc(candidateCollection, payload);
+   await addDoc(candidateCollection, payload);
   } catch (error) {
     dispatch({
       type: CANDIDATE_ERROR,

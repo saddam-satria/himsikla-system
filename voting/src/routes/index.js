@@ -1,12 +1,14 @@
 import React from 'react';
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import NavbarComponent from '../components/NavbarComponent';
+import VoterHook from '../hooks/voter';
 import Authentication from '../middlewares/authentication';
 import Authorization from '../middlewares/authorization';
 import GetUser from '../middlewares/getUser';
 import SetToken from '../middlewares/setToken';
 import Admin from '../pages/admin';
 import Candidates from '../pages/admin/candidates';
+import Voter from '../pages/admin/voter';
 import Homepage from '../pages/homepage';
 import Profile from '../pages/profile';
 import Voting from '../pages/voting';
@@ -30,6 +32,7 @@ export function Routing() {
             element={
               <GetUser>
                 <Authentication>
+                  <VoterHook />
                   <Voting />
                 </Authentication>
               </GetUser>
@@ -69,6 +72,16 @@ export function Routing() {
               <GetUser>
                 <Authorization>
                   <Candidates />
+                </Authorization>
+              </GetUser>
+            }
+          />
+          <Route
+            path="/admin/voter"
+            element={
+              <GetUser>
+                <Authorization>
+                  <Voter />
                 </Authorization>
               </GetUser>
             }

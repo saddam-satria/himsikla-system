@@ -5,7 +5,7 @@ import { CANDIDATE_ERROR } from '../../types';
 const deleteCandidate = (id) => async (dispatch) => {
   const candidateRef = doc(firestore, 'candidate', id);
   try {
-    deleteDoc(candidateRef);
+    await deleteDoc(candidateRef);
   } catch (error) {
     dispatch({
       type: CANDIDATE_ERROR,

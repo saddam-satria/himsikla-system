@@ -16,7 +16,7 @@ function Homepage() {
   const dispatch = useDispatch();
   const userState = useSelector((state) => state.user);
   const candidateState = useSelector((state) => state.candidate);
-  const currentUser = userState.data;
+  const currentUser = userState.token;
 
   const [errorMessage, setErrorMessage] = React.useState('');
 
@@ -185,6 +185,7 @@ function Homepage() {
                       ke halaman pemilu
                     </Link>
                   </div>
+
                   <div>
                     <Link
                       to={`/admin?current_user=${currentUser}`}
@@ -207,6 +208,11 @@ function Homepage() {
                     onChange={(e) => {
                       setPayload({ ...payload, email: e.target.value });
                     }}
+                    onKeyUp={(e) => {
+                      if (e.key === 'Enter') {
+                        startVoting(e);
+                      }
+                    }}
                   />
                   <input
                     type="password"
@@ -216,6 +222,11 @@ function Homepage() {
                       setPayload({ ...payload, token: e.target.value });
                     }}
                     value={payload.token}
+                    onKeyUp={(e) => {
+                      if (e.key === 'Enter') {
+                        startVoting(e);
+                      }
+                    }}
                   />
                   <div className="ml-auto">
                     <button
